@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import api from "../api";
-import {Button, Card, Container, Table} from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
 import MyModal from "../components/UI/modal/MyModal";
 import RoomFormEdit from "../components/RoomFormEdit";
 import TableBookings from "../components/tableBookings";

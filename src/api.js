@@ -10,7 +10,6 @@ async function getRooms(token) {
             }
         }
     )
-    console.log(rooms.data)
     return rooms.data
 }
 
@@ -106,7 +105,30 @@ async function getBookingByID(token, roomId, bookingId) {
     return bookings.data
 }
 
+async function postBooking(token, booking) {
+    const response = await axios.post(
+        `http://192.168.0.14:8080/api/rooms/${booking.roomId}/bookings/`,
+        {
+            name: booking.name,
+            phone: booking.phone,
+            arrival_date: booking.arrival_date,
+            departure_date: booking.departure_date,
+            guests_number: parseInt(booking.guests_number),
+            is_booking: booking.is_booking,
+            comment: booking.comment,
+            status: parseInt(booking.status),
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    return response
+}
+
 const api = {getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID}
+    getBookings, getBookingByID, postBooking}
 
 export default api;

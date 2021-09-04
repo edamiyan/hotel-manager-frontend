@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import api from "../api";
-import {Card, CardColumns, Container} from "react-bootstrap";
+import {Card, Container} from "react-bootstrap";
 
 const BookingDetail = () => {
     const {roomId, bookingId} = useParams()

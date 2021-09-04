@@ -1,6 +1,5 @@
 import React from 'react';
 import RoomCard from "./roomCard";
-import {Container} from "react-bootstrap";
 
 const RoomsList = ({rooms}) => {
     return (

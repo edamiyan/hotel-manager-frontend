@@ -1,9 +1,12 @@
 import React from 'react';
+import BookingForm from "../components/BookingForm";
 
 const Main = () => {
+
     return (
-        <div>
-            Главная страница
+        <div className={"mt-4"}>
+            <BookingForm/>
+
         </div>
     );
 };

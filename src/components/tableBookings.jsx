@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Table} from "react-bootstrap";
 import api from "../api";
-import RoomCard from "./roomCard";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const TableBookings = ({roomId}) => {
     const history1 = useHistory();

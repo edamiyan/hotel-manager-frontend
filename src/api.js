@@ -1,19 +1,35 @@
 import axios from "axios";
+const token = localStorage.getItem('token');
 
-async function getRooms(token) {
-    const rooms = await axios.get(
-        'http://192.168.0.14:8080/api/rooms/',
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }
-    )
-    return rooms.data
+function logout() {
+    console.log('LogOut');
+    // localStorage.clear();
+
 }
 
-async function postRoom(token, room) {
+async function getRooms() {
+    try {
+        const response = await axios.get(
+            'http://192.168.0.14:8080/api/rooms/',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
+        return response.data
+    }
+    catch (error) {
+        console.log(error.response.status)
+        if (error.response.status === 401) {
+            logout()
+        }
+    }
+
+}
+
+async function postRoom(room) {
     const response = await axios.post(
         'http://192.168.0.14:8080/api/rooms/',
         {
@@ -33,7 +49,7 @@ async function postRoom(token, room) {
     return response
 }
 
-async function deleteRoom(token, id) {
+async function deleteRoom(id) {
     const response = await axios.delete(
         `http://192.168.0.14:8080/api/rooms/${id}`,
         {
@@ -46,7 +62,7 @@ async function deleteRoom(token, id) {
     return response
 }
 
-async function editRoom(token, id, fields) {
+async function editRoom(id, fields) {
     const response = await axios.put(
         `http://192.168.0.14:8080/api/rooms/${id}`,
         {
@@ -66,7 +82,7 @@ async function editRoom(token, id, fields) {
     return response
 }
 
-async function getRoomByID(token, id) {
+async function getRoomByID(id) {
     const room = await axios.get(
         `http://192.168.0.14:8080/api/rooms/${id}`,
         {
@@ -79,9 +95,9 @@ async function getRoomByID(token, id) {
     return room.data
 }
 
-async function getBookings(token, roomId) {
+async function getBookings(roomId) {
     const bookings = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${roomId}`+`/bookings/`,
+        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -92,9 +108,9 @@ async function getBookings(token, roomId) {
     return bookings.data
 }
 
-async function getBookingByID(token, roomId, bookingId) {
+async function getBookingByID(roomId, bookingId) {
     const bookings = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${roomId}`+`/bookings/${bookingId}`,
+        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +121,7 @@ async function getBookingByID(token, roomId, bookingId) {
     return bookings.data
 }
 
-async function postBooking(token, booking) {
+async function postBooking(booking) {
     const response = await axios.post(
         `http://192.168.0.14:8080/api/rooms/${booking.roomId}/bookings/`,
         {
@@ -128,7 +144,25 @@ async function postBooking(token, booking) {
     return response
 }
 
+async function getBookingsRoomId(roomId) {
+    const bookings = await axios.get(
+        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    if (bookings.data.data) {
+        bookings.data.data.forEach(booking => {
+            booking.roomId = roomId;
+        })
+    }
+    return bookings.data
+}
+
 const api = {getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID, postBooking}
+    getBookings, getBookingByID, postBooking, getBookingsRoomId}
 
 export default api;

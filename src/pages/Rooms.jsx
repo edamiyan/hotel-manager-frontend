@@ -9,12 +9,10 @@ const Rooms = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
     const [roomList, setRoomList] = useState([]);
-    const token = localStorage.getItem('token');
 
     async function fetchRooms() {
-        const response = await api.getRooms(token);
+        const response = await api.getRooms();
         setRoomList(response.data)
     }
 
@@ -23,15 +21,15 @@ const Rooms = () => {
     }, [])
 
     async function createRoom(newPost) {
-        const response = await api.postRoom(token, newPost);
-        console.log(response)
+        const response = await api.postRoom(newPost);
+        console.log(response);
         await fetchRooms();
         handleClose();
     }
 
     async function deleteRoom(id) {
-        const response = await api.deleteRoom(token, id);
-        console.log(response)
+        const response = await api.deleteRoom(id);
+        console.log(response);
         await fetchRooms();
     }
 

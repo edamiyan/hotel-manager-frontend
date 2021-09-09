@@ -1,27 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
 import api from "../api";
+import DatePicker from "react-datepicker";
+import ru from "date-fns/locale/ru";
+import 'react-datepicker/dist/react-datepicker.css'
+import { setDefaultLocale } from  "react-datepicker";
+setDefaultLocale('ru')
 
-const BookingForm = () => {
-    const [roomList, setRoomList] = useState([]);
-    const token = localStorage.getItem('token');
-    const [startDate, setStartDate] = useState(new Date());
-
-    async function fetchRooms() {
-        const response = await api.getRooms(token);
-        setRoomList(response.data)
-    }
-
-    useEffect(() => {
-        fetchRooms();
-    }, [])
-
+const BookingForm = ({roomList}) => {
     const [booking, setBooking] = useState(
         {
             name: '',
             phone: '',
             arrival_date: '',
-            departure_date: '',
+            departure_date: null,
             guests_number: '',
             is_booking: false,
             comment: '',
@@ -32,13 +24,13 @@ const BookingForm = () => {
     const addNewBooking = (e) => {
         e.preventDefault()
         console.log(booking)
-        const response = api.postBooking(token, booking)
+        const response = api.postBooking(booking)
         console.log(response)
         setBooking({
             name: '',
             phone: '',
             arrival_date: '',
-            departure_date: '',
+            departure_date: null,
             guests_number: '',
             is_booking: false,
             comment: '',
@@ -83,21 +75,27 @@ const BookingForm = () => {
 
                             <Col lg={3} xs={6}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
-                                    <Form.Control
-                                        value={booking.arrival_date}
-                                        onChange={e => setBooking({...booking, arrival_date: e.target.value})}
-                                        type="date"
-                                        placeholder="Дата заезда"
+                                    <DatePicker
+                                        className={"form-control"}
+                                        placeholderText="Дата заезда"
+                                        dateFormat="dd.MM.yyyy"
+                                        locale={ru}
+                                        onChange={(date) => setBooking({...booking, arrival_date: date})}
+                                        selected={booking.arrival_date}
+                                        disabledKeyboardNavigation
                                     />
                                 </Form.Group>
                             </Col>
                             <Col lg={3} xs={6}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
-                                    <Form.Control
-                                        value={booking.departure_date}
-                                        onChange={e => setBooking({...booking, departure_date: e.target.value})}
-                                        type="date"
-                                        placeholder="Дата отъезда"
+                                    <DatePicker
+                                        className={"form-control"}
+                                        placeholderText="Дата отъезда"
+                                        dateFormat="dd.MM.yyyy"
+                                        locale={ru}
+                                        onChange={(date) => setBooking({...booking, departure_date: date})}
+                                        selected={booking.departure_date}
+                                        WithPortal
                                     />
                                 </Form.Group>
                             </Col>

@@ -14,10 +14,9 @@ const RoomDetail = () => {
 
     const room_id = useParams()
     const [room, setRoom] = useState({room_number: '', double_bed: '', single_bed: '', description: ''});
-    const token = localStorage.getItem('token');
 
     async function fetchRoom() {
-        const response = await api.getRoomByID(token, room_id.id);
+        const response = await api.getRoomByID(room_id.id);
         setRoom(response);
     }
 
@@ -26,13 +25,13 @@ const RoomDetail = () => {
     }, [])
 
     async function edit(fields) {
-        const response = await api.editRoom(token, room_id.id, fields);
+        const response = await api.editRoom(room_id.id, fields);
         console.log(response);
         await fetchRoom();
     }
 
     async function deleteRoom() {
-        const response = await api.deleteRoom(token, room_id.id);
+        const response = await api.deleteRoom(room_id.id);
         console.log(response);
         history.push("/rooms");
     }

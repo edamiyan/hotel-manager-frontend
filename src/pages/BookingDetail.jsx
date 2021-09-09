@@ -6,10 +6,9 @@ import {Card, Container} from "react-bootstrap";
 const BookingDetail = () => {
     const {roomId, bookingId} = useParams()
     const [booking, setBooking] = useState()
-    const token = localStorage.getItem('token');
 
     async function fetchBooking() {
-        const response = await api.getBookingByID(token, roomId, bookingId);
+        const response = await api.getBookingByID(roomId, bookingId);
         setBooking(response);
     }
 
@@ -21,22 +20,26 @@ const BookingDetail = () => {
     if (booking) {
         booking.arrival_date = new Date(booking.arrival_date);
         booking.departure_date = new Date(booking.departure_date);
-        switch(booking.status) {
+        switch (booking.status) {
             case 1:
-                status = {text:'Не оплачено', variant: 'danger'};
+                status = {text: 'Не оплачено', variant: 'danger'};
                 break;
             case 2:
-                status = {text:'Депозит внесен', variant: 'warning'};
+                status = {text: 'Депозит внесен', variant: 'warning'};
                 break;
             case 3:
-                status = {text:'Оплачено', variant: 'success'}
+                status = {text: 'Оплачено', variant: 'success'}
+                break;
+            default:
+                status = {text: 'Без статуса', variant: 'light'}
+
         }
     }
 
     return (
         <div>
             {booking
-                ?<Container>
+                ? <Container>
                     <Card
                         bg={status.variant}
                         text={'white'}
@@ -45,15 +48,17 @@ const BookingDetail = () => {
                         <Card.Header>Информация по бронированию</Card.Header>
                         <Card.Body>
                             <Card.Title>Имя: {booking.name}</Card.Title>
-                            <Card.Subtitle className={'mb-2'}>Дата прибытия: {booking.arrival_date.toLocaleDateString()}</Card.Subtitle>
-                            <Card.Subtitle className={'mb-2 '}>Дата отъезда: {booking.departure_date.toLocaleDateString()}</Card.Subtitle>
+                            <Card.Subtitle className={'mb-2'}>Дата
+                                прибытия: {booking.arrival_date.toLocaleDateString()}</Card.Subtitle>
+                            <Card.Subtitle className={'mb-2 '}>Дата
+                                отъезда: {booking.departure_date.toLocaleDateString()}</Card.Subtitle>
                             <Card.Subtitle className={'mb-2'}>Количество гостей: {booking.guests_number}</Card.Subtitle>
                             <Card.Subtitle className={'mb-1'}>Статус: {status.text}</Card.Subtitle>
                             <Card.Text>
                                 Комментарий: {booking.comment}
                             </Card.Text>
                         </Card.Body>
-                        <Card.Footer>Телефон: <a style={{color:'white'}} href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
+                        <Card.Footer>Телефон: <a style={{color: 'white'}} href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
                     </Card>
                 </Container>
                 : <div></div>

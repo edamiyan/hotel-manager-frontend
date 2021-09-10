@@ -1,15 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import api from "../api";
-import {Card, Container} from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
+import MyModal from "../components/UI/modal/MyModal";
+import BookingFormEdit from "../components/BookingFormEdit";
 
 const BookingDetail = () => {
     const {roomId, bookingId} = useParams()
     const [booking, setBooking] = useState()
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     async function fetchBooking() {
         const response = await api.getBookingByID(roomId, bookingId);
         setBooking(response);
+    }
+
+    function editBooking() {
+        handleShow()
+    }
+
+    function deleteBooking() {
     }
 
     useEffect(() => {
@@ -38,6 +51,13 @@ const BookingDetail = () => {
 
     return (
         <div>
+            <MyModal title={'Редактировать параметры номера'} show={show} handleClose={handleClose}>
+                <BookingFormEdit
+                    booking = {booking}
+                    editBooking = {editBooking}
+                    handleClose = {handleClose}
+                />
+            </MyModal>
             {booking
                 ? <Container>
                     <Card
@@ -59,6 +79,18 @@ const BookingDetail = () => {
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer>Телефон: <a style={{color: 'white'}} href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
+                        <Button
+                            variant="secondary"
+                            onClick={editBooking}
+                        >
+                            Редактировать
+                        </Button>
+                        <Button
+                            variant="danger"
+                            onClick={deleteBooking}
+                        >
+                            Удалить
+                        </Button>
                     </Card>
                 </Container>
                 : <div></div>

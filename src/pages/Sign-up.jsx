@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../context";
 import axios from "axios";
+import {url} from "../api";
 
 const SignUp = () => {
     const {setIsAuth} = useContext(AuthContext);
@@ -8,7 +9,7 @@ const SignUp = () => {
     const register = async event => {
         event.preventDefault();
         axios.post(
-            'http://192.168.0.14:8080/auth/sign-up',
+            `http://${url}/auth/sign-up`,
             {
                 name: user.name,
                 username: user.username,
@@ -24,7 +25,7 @@ const SignUp = () => {
     const login = async event => {
         event.preventDefault();
         axios.post(
-            'http://192.168.0.14:8080/auth/sign-in',
+            `http://${url}/auth/sign-in`,
             {
                 username: user.username,
                 password: user.password,

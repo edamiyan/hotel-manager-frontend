@@ -1,37 +1,29 @@
 import axios from "axios";
+
 const token = localStorage.getItem('token');
+export const url = '192.168.0.104:8080'
 
-function logout() {
-    console.log('LogOut');
-    // localStorage.clear();
-
-}
+// function logout() {
+//     console.log('LogOut');
+//     // localStorage.clear();
+// }
 
 async function getRooms() {
-    try {
-        const response = await axios.get(
-            'http://192.168.0.14:8080/api/rooms/',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+    const response = await axios.get(
+        `http://${url}/api/rooms/`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
-        )
-        return response.data
-    }
-    catch (error) {
-        console.log(error.response.status)
-        if (error.response.status === 401) {
-            logout()
         }
-    }
-
+    )
+    return response.data
 }
 
 async function postRoom(room) {
     const response = await axios.post(
-        'http://192.168.0.14:8080/api/rooms/',
+        `http://${url}/api/rooms/`,
         {
             room_number: parseInt(room.room_number),
             double_bed: parseInt(room.double_bed),
@@ -51,7 +43,7 @@ async function postRoom(room) {
 
 async function deleteRoom(id) {
     const response = await axios.delete(
-        `http://192.168.0.14:8080/api/rooms/${id}`,
+        `http://${url}/api/rooms/${id}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +56,7 @@ async function deleteRoom(id) {
 
 async function editRoom(id, fields) {
     const response = await axios.put(
-        `http://192.168.0.14:8080/api/rooms/${id}`,
+        `http://${url}/api/rooms/${id}`,
         {
             room_number: parseInt(fields.room_number),
             double_bed: parseInt(fields.double_bed),
@@ -84,7 +76,7 @@ async function editRoom(id, fields) {
 
 async function getRoomByID(id) {
     const room = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${id}`,
+        `http://${url}/api/rooms/${id}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +89,7 @@ async function getRoomByID(id) {
 
 async function getBookings(roomId) {
     const bookings = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/`,
+        `http://${url}/api/rooms/${roomId}/bookings/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -110,7 +102,7 @@ async function getBookings(roomId) {
 
 async function getBookingByID(roomId, bookingId) {
     const bookings = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/${bookingId}`,
+        `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -123,7 +115,7 @@ async function getBookingByID(roomId, bookingId) {
 
 async function postBooking(booking) {
     const response = await axios.post(
-        `http://192.168.0.14:8080/api/rooms/${booking.roomId}/bookings/`,
+        `http://${url}/api/rooms/${booking.roomId}/bookings/`,
         {
             name: booking.name,
             phone: booking.phone,
@@ -146,7 +138,7 @@ async function postBooking(booking) {
 
 async function getBookingsRoomId(roomId) {
     const bookings = await axios.get(
-        `http://192.168.0.14:8080/api/rooms/${roomId}/bookings/`,
+        `http://${url}/api/rooms/${roomId}/bookings/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -162,7 +154,9 @@ async function getBookingsRoomId(roomId) {
     return bookings.data
 }
 
-const api = {getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID, postBooking, getBookingsRoomId}
+const api = {
+    getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
+    getBookings, getBookingByID, postBooking, getBookingsRoomId
+}
 
 export default api;

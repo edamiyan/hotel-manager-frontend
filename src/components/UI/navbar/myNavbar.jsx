@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 const MyNavbar = () => {
     return (
-        <Navbar bg="danger" variant="dark">
+        <Navbar style={{backgroundColor: '#06266F'}} variant="dark">
             <Container>
                 <Navbar.Brand>Hotel</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>

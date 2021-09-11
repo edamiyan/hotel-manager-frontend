@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import 'react-datepicker/dist/react-datepicker.css'
 import { setDefaultLocale } from  "react-datepicker";
+import moment from "moment";
 setDefaultLocale('ru')
 
 const BookingForm = ({roomList}) => {
@@ -13,7 +14,7 @@ const BookingForm = ({roomList}) => {
             name: '',
             phone: '',
             arrival_date: '',
-            departure_date: null,
+            departure_date: '',
             guests_number: '',
             is_booking: false,
             comment: '',
@@ -30,7 +31,7 @@ const BookingForm = ({roomList}) => {
             name: '',
             phone: '',
             arrival_date: '',
-            departure_date: null,
+            departure_date: '',
             guests_number: '',
             is_booking: false,
             comment: '',
@@ -42,7 +43,7 @@ const BookingForm = ({roomList}) => {
     return (
         <Container>
             <Card>
-                <Card.Header>
+                <Card.Header style={{color: 'white', backgroundColor: '#06266F'}}>
                     <h4>
                         Добавить новое бронирование
                     </h4>
@@ -82,7 +83,6 @@ const BookingForm = ({roomList}) => {
                                         locale={ru}
                                         onChange={(date) => setBooking({...booking, arrival_date: date})}
                                         selected={booking.arrival_date}
-                                        disabledKeyboardNavigation
                                     />
                                 </Form.Group>
                             </Col>
@@ -95,7 +95,6 @@ const BookingForm = ({roomList}) => {
                                         locale={ru}
                                         onChange={(date) => setBooking({...booking, departure_date: date})}
                                         selected={booking.departure_date}
-                                        WithPortal
                                     />
                                 </Form.Group>
                             </Col>
@@ -171,7 +170,8 @@ const BookingForm = ({roomList}) => {
                             <Col>
                                 <Button
                                     type={"submit"}
-                                    className="btn btn-danger mt-2"
+                                    style={{backgroundColor: '#06266F'}}
+                                    className="btn mt-2"
                                     onClick={addNewBooking}>Создать комнату
                                 </Button>
                             </Col>

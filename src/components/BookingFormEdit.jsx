@@ -66,7 +66,6 @@ const BookingFormEdit = (props) => {
                             locale={ru}
                             onChange={(date) => setBooking({...booking, departure_date: date})}
                             selected={booking.departure_date}
-                            WithPortal
                         />
                     </Form.Group>
                 </Col>
@@ -124,8 +123,9 @@ const BookingFormEdit = (props) => {
                 <Col>
                     <Button
                         type={"submit"}
-                        className="btn btn-danger mt-2"
-                        onClick={editBooking}>Создать комнату
+                        className="btn mt-2"
+                        style={{backgroundColor: '#06266F'}}
+                        onClick={editBooking}>Сохранить изменения
                     </Button>
                 </Col>
             </Row>

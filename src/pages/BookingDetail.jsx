@@ -4,6 +4,7 @@ import api from "../api";
 import {Button, Card, Container} from "react-bootstrap";
 import MyModal from "../components/UI/modal/MyModal";
 import BookingFormEdit from "../components/BookingFormEdit";
+let status = {};
 
 const BookingDetail = () => {
     const {roomId, bookingId} = useParams()
@@ -21,7 +22,9 @@ const BookingDetail = () => {
     async function editBooking(booking) {
         handleShow()
         const response = await api.editBooking(roomId, bookingId, booking)
-        console.log(response)
+        if (response.status == 200) {
+            setBooking(booking);
+        }
     }
 
     function deleteBooking() {
@@ -29,25 +32,28 @@ const BookingDetail = () => {
 
     useEffect(() => {
         fetchBooking();
-    }, [booking])
+    }, [])
 
-    let status = '';
     if (booking) {
         booking.arrival_date = new Date(booking.arrival_date);
         booking.departure_date = new Date(booking.departure_date);
-        switch (booking.status) {
-            case 1:
-                status = {text: 'Не оплачено', variant: 'danger'};
+        console.log(booking)
+        switch (booking.is_booking) {
+            case true:
+                status = {text: 'Заказ с Booking', bgColor: '#06276F', color: 'white'};
                 break;
-            case 2:
-                status = {text: 'Депозит внесен', variant: 'warning'};
-                break;
-            case 3:
-                status = {text: 'Оплачено', variant: 'success'}
-                break;
-            default:
-                status = {text: 'Без статуса', variant: 'light'}
-
+            case false:
+                switch (booking.status) {
+                    case 1:
+                        status = {text: 'Не оплачено', bgColor: '#FF5A40', color: 'white'};
+                        break;
+                    case 2:
+                        status = {text: 'Депозит внесен', bgColor: '#FFA900', color: 'white'};
+                        break;
+                    case 3:
+                        status = {text: 'Оплачено', bgColor: '#2E8F00', color: 'white'};
+                        break;
+                }
         }
     }
 
@@ -63,12 +69,14 @@ const BookingDetail = () => {
             {booking
                 ? <Container>
                     <Card
-                        bg={status.variant}
+                        style={{
+                            background: status.bgColor,
+                        }}
                         text={'white'}
-                        className="mb-2 row"
+                        className="mt-5 mb-2 row"
                     >
-                        <Card.Header>Информация по бронированию</Card.Header>
-                        <Card.Body>
+                        <Card.Header style={{color: status.color}}>Информация по бронированию</Card.Header>
+                        <Card.Body style={{color: status.color}}>
                             <Card.Title>Имя: {booking.name}</Card.Title>
                             <Card.Subtitle className={'mb-2'}>Дата
                                 прибытия: {booking.arrival_date.toLocaleDateString()}</Card.Subtitle>
@@ -80,7 +88,7 @@ const BookingDetail = () => {
                                 Комментарий: {booking.comment}
                             </Card.Text>
                         </Card.Body>
-                        <Card.Footer>Телефон: <a style={{color: 'white'}} href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
+                        <Card.Footer style={{color: status.color}}>Телефон: <a href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
                         <Button
                             variant="secondary"
                             onClick={handleShow}

@@ -3,8 +3,7 @@ import BookingForm from "../components/BookingForm";
 import BookingTimeline from "../components/BookingTimeline";
 import api from "../api";
 import moment from "moment";
-import {selectedAndCanMove} from "react-calendar-timeline/lib/lib/items/styles";
-import {Switch} from "react-router-dom";
+import TodayArrival from "../components/todayArrival";
 
 const Main = () => {
     const [roomList, setRoomList] = useState([]);
@@ -15,26 +14,28 @@ const Main = () => {
     async function fetchRooms() {
         const response = await api.getRooms();
         setRoomList(response.data);
-        setGroups(response.data.map(item => {
-            return {id: item.id, title: `Номер комнаты: ${item.room_number}`}
-        })
-        )
+
+        if (response) {
+            setGroups(response.data.map(item => {
+                return {id: item.id, title: `Номер комнаты: ${item.room_number}`}
+            }))
+        }
     }
 
     function getBgColor(is_booking, status) {
         switch (is_booking) {
             case true:
-                return 'blue'
+                return '#06276F'
             case false:
                 switch (status) {
                     case 0:
                         return 'white'
                     case 1:
-                        return 'red'
+                        return '#9A001E'
                     case 2:
-                        return 'yellow'
+                        return '#FFA900'
                     case 3:
-                        return 'green'
+                        return '#2E8F00'
                 }
         }
     }
@@ -50,7 +51,7 @@ const Main = () => {
                     case 1:
                         return 'white'
                     case 2:
-                        return 'black'
+                        return 'white'
                     case 3:
                         return 'white'
                 }
@@ -79,8 +80,11 @@ const Main = () => {
                     'aria-hidden': true,
                     style: {
                         background: getBgColor(item.is_booking, item.status),
+                        border:  '1px solid black',
+                        borderRadius: '3px',
                         color: getTextColor(item.is_booking, item.status),
-                        fontSize: 16
+                        fontSize: 16,
+                        fontWeight: 450,
                     }
                 }
             }
@@ -99,6 +103,9 @@ const Main = () => {
         <div className={"mt-4"}>
             <BookingForm
                 roomList={roomList}
+            />
+            <TodayArrival
+                items={items}
             />
             <BookingTimeline
                 groups={groups}

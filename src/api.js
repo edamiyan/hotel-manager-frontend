@@ -1,7 +1,8 @@
 import axios from "axios";
+import moment from "moment";
 
 const token = localStorage.getItem('token');
-export const url = '192.168.31.242:8080'
+export const url = '165.227.154.88:8080'
 
 // function logout() {
 //     console.log('LogOut');
@@ -119,8 +120,8 @@ async function postBooking(booking) {
         {
             name: booking.name,
             phone: booking.phone,
-            arrival_date: booking.arrival_date,
-            departure_date: booking.departure_date,
+            arrival_date: moment(booking.arrival_date).add(13, 'hour'),
+            departure_date: moment(booking.departure_date).add(12, 'hour'),
             guests_number: parseInt(booking.guests_number),
             is_booking: booking.is_booking,
             comment: booking.comment,

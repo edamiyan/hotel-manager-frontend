@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Table} from "react-bootstrap";
 import api from "../api";
 import {useHistory} from "react-router-dom";
-
+import moment from "moment";
+import 'moment/locale/ru'
 const TableBookings = ({roomId}) => {
+    moment.locale('ru')
     const history1 = useHistory();
     const [bookings, setBookings] = useState([]);
 
@@ -19,12 +21,12 @@ const TableBookings = ({roomId}) => {
 
     function getStatusColor(status) {
         switch (status) {
-            case (1):
-                return 'red'
-            case (2):
-                return 'yellow'
-            case (3):
-                return 'green'
+            case 1:
+                return '#9A001E'
+            case 2:
+                return '#FFA900'
+            case 3:
+                return '#2E8F00'
             default:
                 return 'white'
         }
@@ -54,12 +56,12 @@ const TableBookings = ({roomId}) => {
                     </thead>
                     <tbody>
                     {bookings.map(booking =>
-                        <tr style={{backgroundColor: booking.statusColor}} onClick={() => {
+                        <tr style={{color: 'white', backgroundColor: booking.statusColor}} onClick={() => {
                             history1.push(`/rooms/${roomId.id}/booking/${booking.id}`)
                         }} key={booking.id}>
                             <td>{booking.name}</td>
-                            <td>{booking.arrival_date.toLocaleDateString()}</td>
-                            <td>{booking.departure_date.toLocaleDateString()}</td>
+                            <td>{moment(booking.arrival_date).format("DD MMMM yyyy")}</td>
+                            <td>{moment(booking.departure_date).format("DD MMMM yyyy")}</td>
                         </tr>
                     )}
                     </tbody>

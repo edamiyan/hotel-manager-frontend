@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
-import {Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 
 const BookingFormEdit = (props) => {
     const [booking, setBooking] = useState({
@@ -15,7 +15,7 @@ const BookingFormEdit = (props) => {
         status: props.booking.status,
     })
 
-    const edit = (e) => {
+    const editBooking = (e) => {
         e.preventDefault()
         props.editBooking(booking);
         props.handleClose();
@@ -93,6 +93,40 @@ const BookingFormEdit = (props) => {
                         <option value={2}>Депозит внесен</option>
                         <option value={3}>Оплачено</option>
                     </Form.Select>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
+                        <Form.Control as={"textarea"}
+                                      value={booking.comment}
+                                      onChange={e => setBooking({...booking, comment: e.target.value})}
+                                      type="text"
+                                      placeholder="Комментарий к заказу"
+                                      className="form-control"
+                                      rows="2"
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
+                    <Form.Check
+                        label={"Заказ с Booking?"}
+                        type="checkbox"
+                        id="flexCheckDefault"
+                        checked={booking.is_booking}
+                        onChange={e => setBooking({...booking, is_booking: !booking.is_booking})}
+                    />
+                </Form.Group>
+            </Row>
+            <Row>
+                <Col>
+                    <Button
+                        type={"submit"}
+                        className="btn btn-danger mt-2"
+                        onClick={editBooking}>Создать комнату
+                    </Button>
                 </Col>
             </Row>
         </Form>

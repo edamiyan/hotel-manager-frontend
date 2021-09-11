@@ -5,8 +5,7 @@ import {Link} from "react-router-dom";
 
 const RoomCard = ({room}) => {
     return (
-        <Card className="mt-3 col-lg-5">
-            <Link to={`/rooms/${room.id}`}>
+        <Card as={Link} to={`/rooms/${room.id}`} className="mt-4 ms-auto me-auto col-lg-5">
                 <h3>Номер комнаты: {room.room_number}</h3>
                 <div className="row">
                     <h6>Максимальная вместимость: {room.double_bed + room.single_bed}</h6>
@@ -16,7 +15,6 @@ const RoomCard = ({room}) => {
                         Цена (сутки): {room.price} рублей
                     </h6>
                 </div>
-            </Link>
         </Card>
     );
 };

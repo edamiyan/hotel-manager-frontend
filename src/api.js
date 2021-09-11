@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const token = localStorage.getItem('token');
-export const url = '192.168.0.104:8080'
+export const url = '192.168.31.242:8080'
 
 // function logout() {
 //     console.log('LogOut');
@@ -154,9 +154,45 @@ async function getBookingsRoomId(roomId) {
     return bookings.data
 }
 
+async function editBooking(roomId, bookingId, input) {
+    const response = await axios.put(
+        `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
+        {
+            name: input.name,
+            phone: input.phone,
+            arrival_date: input.arrival_date,
+            departure_date: input.departure_date,
+            guests_number: parseInt(input.guests_number),
+            is_booking: input.is_booking,
+            comment: input.comment,
+            status: parseInt(input.status),
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    return response
+}
+
+async function getRoomIdByBookingId(bookingId) {
+    const response = await axios.get(
+        `http://${url}/api/booking/${bookingId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    return response
+}
+
 const api = {
     getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID, postBooking, getBookingsRoomId
+    getBookings, getBookingByID, postBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
 }
 
 export default api;

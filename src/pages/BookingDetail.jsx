@@ -18,8 +18,10 @@ const BookingDetail = () => {
         setBooking(response);
     }
 
-    function editBooking() {
+    async function editBooking(booking) {
         handleShow()
+        const response = await api.editBooking(roomId, bookingId, booking)
+        console.log(response)
     }
 
     function deleteBooking() {
@@ -27,7 +29,7 @@ const BookingDetail = () => {
 
     useEffect(() => {
         fetchBooking();
-    }, [])
+    }, [booking])
 
     let status = '';
     if (booking) {
@@ -81,7 +83,7 @@ const BookingDetail = () => {
                         <Card.Footer>Телефон: <a style={{color: 'white'}} href="tel:{booking.phone}">{booking.phone}</a></Card.Footer>
                         <Button
                             variant="secondary"
-                            onClick={editBooking}
+                            onClick={handleShow}
                         >
                             Редактировать
                         </Button>

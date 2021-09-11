@@ -3,9 +3,7 @@ import RoomCard from "./roomCard";
 
 const RoomsList = ({rooms}) => {
     return (
-        <div
-            className={"row"}
-        >
+        <div className={"row"}>
                 {rooms !== null
                     ? rooms.map(room =>
                         <RoomCard

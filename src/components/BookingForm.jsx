@@ -5,7 +5,6 @@ import DatePicker from "react-datepicker";
 import ru from "date-fns/locale/ru";
 import 'react-datepicker/dist/react-datepicker.css'
 import { setDefaultLocale } from  "react-datepicker";
-import moment from "moment";
 setDefaultLocale('ru')
 
 const BookingForm = ({roomList}) => {
@@ -172,7 +171,9 @@ const BookingForm = ({roomList}) => {
                                     type={"submit"}
                                     style={{backgroundColor: '#06266F'}}
                                     className="btn mt-2"
-                                    onClick={addNewBooking}>Создать комнату
+                                    onClick={addNewBooking}
+                                >
+                                    Забронировать
                                 </Button>
                             </Col>
                         </Row>

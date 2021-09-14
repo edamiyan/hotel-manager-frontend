@@ -6,7 +6,6 @@ import {Container} from "react-bootstrap";
 import api from "../api";
 import {useHistory} from "react-router-dom";
 import TimelineHeaders from "react-calendar-timeline/lib/lib/headers/TimelineHeaders";
-import SidebarHeader from "react-calendar-timeline/lib/lib/headers/SidebarHeader";
 import DateHeader from "react-calendar-timeline/lib/lib/headers/DateHeader";
 
 const BookingTimeline = ({groups, items}) => {

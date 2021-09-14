@@ -11,7 +11,18 @@ const TableBookings = ({roomId}) => {
 
     async function fetchBookings() {
         const response = await api.getBookings(roomId.id);
-        setBookings(response.data);
+        if (response.data) {
+            response.data.sort(function(a, b) {
+                var c = new Date(a.arrival_date);
+                var d = new Date(b.arrival_date);
+                return c-d;
+            });
+            const today = moment();
+            const responseFiltered = response.data.filter((item) => {
+                return today.diff(item.departure_date, 'days') <= 0;
+            })
+            setBookings(responseFiltered);
+        }
     }
 
     useEffect(() => {
@@ -19,16 +30,19 @@ const TableBookings = ({roomId}) => {
     }, [])
 
 
-    function getStatusColor(status) {
-        switch (status) {
-            case 1:
-                return '#9A001E'
-            case 2:
-                return '#FFA900'
-            case 3:
-                return '#2E8F00'
-            default:
-                return 'white'
+    function getStatusColor(isBooking, status) {
+        switch (isBooking) {
+            case true:
+                return '#06276F'
+            case false:
+                switch (status) {
+                    case 1:
+                        return '#9A001E'
+                    case 2:
+                        return '#FFA900'
+                    case 3:
+                        return '#2E8F00'
+                }
         }
     }
 
@@ -36,14 +50,14 @@ const TableBookings = ({roomId}) => {
         bookings.forEach(booking => {
                 booking.arrival_date = new Date(booking.arrival_date);
                 booking.departure_date = new Date(booking.departure_date);
-                booking.statusColor = getStatusColor(booking.status);
+                booking.statusColor = getStatusColor(booking.is_booking ,booking.status);
             }
         )
     }
 
 
     return (
-        <div className={"row"}>
+        <div className={"row mt-4"}>
             {bookings != null
                 ?
                 <Table striped bordered hover>

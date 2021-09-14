@@ -1,5 +1,6 @@
 import React from 'react';
 import RoomCard from "./roomCard";
+import {Link} from "react-router-dom";
 
 const RoomsList = ({rooms}) => {
     return (

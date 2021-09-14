@@ -178,6 +178,19 @@ async function editBooking(roomId, bookingId, input) {
     return response
 }
 
+async function deleteBooking(roomId, bookingId) {
+    const response = await axios.delete(
+        `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    return response
+}
+
 async function getRoomIdByBookingId(bookingId) {
     const response = await axios.get(
         `http://${url}/api/booking/${bookingId}`,
@@ -193,7 +206,7 @@ async function getRoomIdByBookingId(bookingId) {
 
 const api = {
     getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID, postBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
+    getBookings, getBookingByID, postBooking, deleteBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
 }
 
 export default api;

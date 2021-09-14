@@ -5,16 +5,14 @@ import {Link} from "react-router-dom";
 
 const RoomCard = ({room}) => {
     return (
-        <Card as={Link} to={`/rooms/${room.id}`} className="mt-4 ms-auto me-auto col-lg-5">
-                <h3>Номер комнаты: {room.room_number}</h3>
-                <div className="row">
-                    <h6>Максимальная вместимость: {2 * room.double_bed + room.single_bed}</h6>
-                </div>
-                <div className="row">
-                    <h6>
-                        Цена (сутки): {room.price} рублей
-                    </h6>
-                </div>
+        <Card as={Link} to={`/rooms/${room.id}`} className="mt-4 ms-auto me-auto" style={{textDecoration: 'none', color: 'black', boxShadow: '6px 6px 5px rgba(122,122,122,0.5)'}}>
+            <h3>Номер комнаты: {room.room_number}</h3>
+
+            <div className="row ms-auto">
+                <h4>
+                    Цена: {room.price} руб./сутки
+                </h4>
+            </div>
         </Card>
     );
 };

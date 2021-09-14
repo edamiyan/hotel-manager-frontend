@@ -4,18 +4,19 @@ import BookingTimeline from "../components/BookingTimeline";
 import api from "../api";
 import moment from "moment";
 import TodayArrival from "../components/todayArrival";
+import {Container} from "react-bootstrap";
+import {Link} from "react-router-dom";
+
 
 const Main = () => {
     const [roomList, setRoomList] = useState([]);
     const [groups, setGroups] = useState([]);
     const [items, setItems] = useState([]);
 
-
     async function fetchRooms() {
         const response = await api.getRooms();
-        setRoomList(response.data);
-
-        if (response) {
+        if (response.data) {
+            setRoomList(response.data);
             setGroups(response.data.map(item => {
                 return {id: item.id, title: `Номер комнаты: ${item.room_number}`}
             }))
@@ -65,11 +66,14 @@ const Main = () => {
         })
         const result = await Promise.all(promises);
         const resArr = result.map(item => item.data).filter(item => !!item).flat();
-        setItems(resArr.map(item => {
+        const resArrFiltered = resArr.filter((item) => {
+            return moment().diff(item.departure_date, 'month') <= 1;
+        })
+        setItems(resArrFiltered.map(item => {
             return {
                 id: item.id,
                 group: item.roomId,
-                title: item.name ,
+                title: item.name,
                 canMove: false,
                 canResize: false,
                 canChangeGroup: false,
@@ -80,7 +84,7 @@ const Main = () => {
                     'aria-hidden': true,
                     style: {
                         background: getBgColor(item.is_booking, item.status),
-                        border:  '1px solid black',
+                        border: '1px solid black',
                         borderRadius: '3px',
                         color: getTextColor(item.is_booking, item.status),
                         fontSize: 16,
@@ -111,6 +115,29 @@ const Main = () => {
                 groups={groups}
                 items={items}
             />
+            {groups.length < 1
+                ? <Container>
+                    <h2 className={'p-2'}
+                        style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
+                        <Link
+                            style={{color: 'white', textDecoration: 'none'}}
+                            to={'/rooms'}>Создайте свой первый номер</Link>
+                    </h2>
+                </Container>
+                : <div></div>
+            }
+            {items.length < 1
+                ? <Container>
+                    <h2 className={'p-2'}
+                        style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
+                        <Link
+                            style={{color: 'white', textDecoration: 'none'}}
+                            to={'/home'}>Создайте первое бронирование</Link>
+                    </h2>
+                </Container>
+                : <div></div>
+            }
+
         </div>
     );
 };

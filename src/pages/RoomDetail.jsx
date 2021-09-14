@@ -45,7 +45,7 @@ const RoomDetail = () => {
                     handleClose = {handleClose}
                 />
             </MyModal>
-            <Card className={"row"}>
+            <Card className={"mt-5 row"}>
                 <Card.Body>
                     <Card.Title>Номер комнаты: {room.room_number}</Card.Title>
                     <Card.Subtitle className="mb-2"> Количество двуспальных мест: {room.double_bed}</Card.Subtitle>

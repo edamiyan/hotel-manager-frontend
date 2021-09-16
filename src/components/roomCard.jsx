@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 const RoomCard = ({room}) => {
     return (
-        <Card as={Link} to={`/rooms/${room.id}`} className="mt-4 ms-auto me-auto" style={{textDecoration: 'none', color: 'black', boxShadow: '6px 6px 5px rgba(122,122,122,0.5)'}}>
+        <Card  className="mt-4 ms-auto me-auto" style={{textDecoration: 'none', color: 'black', boxShadow: '6px 6px 5px rgba(122,122,122,0.5)'}}>
             <h3>Номер комнаты: {room.room_number}</h3>
 
             <div className="row ms-auto">

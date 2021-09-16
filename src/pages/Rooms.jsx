@@ -36,7 +36,7 @@ const Rooms = () => {
     return (
         <Container>
             <div className="row">
-                <Button style={{backgroundColor: '#06276F', color: 'white'}} className={"col-md-12 mt-3"} variant="primary" onClick={handleShow}>
+                <Button style={{backgroundColor: '#06276F', color: 'white'}} className={"col-md-12 mt-3 mb-3 me-2"} variant="primary" onClick={handleShow}>
                     Создать новую комнату
                 </Button>
             </div>
@@ -50,5 +50,4 @@ const Rooms = () => {
         </Container>
     );
 };
-
 export default Rooms;

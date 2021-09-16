@@ -15,23 +15,27 @@ const MyNavbar = () => {
         <Navbar style={{backgroundColor: '#06266F'}} variant="dark">
             <Container>
                 <Navbar.Brand>Hotel</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     {(localStorage.getItem('auth'))
                         ?
-                        <Nav className="me-auto">
-                            <Nav.Link as={NavLink} to={`/home`}>Главная</Nav.Link>
-                            <Nav.Link as={NavLink} to={`/rooms`}>Номера</Nav.Link>
-                            <Nav.Link onClick={logout}>Выход</Nav.Link>
-                        </Nav>
-
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link as={NavLink} to={`/home`}>Главная</Nav.Link>
+                                <Nav.Link as={NavLink} to={`/rooms`}>Номера</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link onClick={logout}>Выход</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
                         :
-                        <Nav className="me-auto">
-                            <Nav.Link as={NavLink} to={`/sign-in`}>Войти</Nav.Link>
-                            <Nav.Link as={NavLink} to={`/sign-up`}>Зарегистрироваться</Nav.Link>
-                        </Nav>
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link as={NavLink} to={`/sign-in`}>Войти</Nav.Link>
+                                <Nav.Link as={NavLink} to={`/sign-up`}>Зарегистрироваться</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+
                     }
-                </Navbar.Collapse>
             </Container>
         </Navbar>
     );

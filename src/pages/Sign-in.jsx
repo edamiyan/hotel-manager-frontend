@@ -13,14 +13,12 @@ const SignIn = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         } else {
             event.preventDefault();
-            console.log(user)
             axios.post(
                 `http://${url}/auth/sign-in`,
                 {

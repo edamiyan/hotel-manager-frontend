@@ -6,7 +6,7 @@ import moment from "moment";
 import 'moment/locale/ru'
 const TableBookings = ({roomId}) => {
     moment.locale('ru')
-    const history1 = useHistory();
+    const history = useHistory();
     const [bookings, setBookings] = useState([]);
 
     async function fetchBookings() {
@@ -71,7 +71,7 @@ const TableBookings = ({roomId}) => {
                     <tbody>
                     {bookings.map(booking =>
                         <tr style={{color: 'white', backgroundColor: booking.statusColor}} onClick={() => {
-                            history1.push(`/rooms/${roomId.id}/booking/${booking.id}`)
+                            history.push(`/rooms/${roomId.id}/booking/${booking.id}`)
                         }} key={booking.id}>
                             <td>{booking.name}</td>
                             <td>{moment(booking.arrival_date).format("DD MMMM yyyy")}</td>

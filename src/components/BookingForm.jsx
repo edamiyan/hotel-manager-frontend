@@ -8,6 +8,7 @@ import { setDefaultLocale } from  "react-datepicker";
 setDefaultLocale('ru')
 
 const BookingForm = ({roomList}) => {
+    const [validated, setValidated] = useState(false);
     const [booking, setBooking] = useState(
         {
             name: '',
@@ -22,22 +23,33 @@ const BookingForm = ({roomList}) => {
         })
 
     const addNewBooking = (e) => {
-        e.preventDefault()
         console.log(booking)
         const response = api.postBooking(booking)
         console.log(response)
-        setBooking({
-            name: '',
-            phone: '',
-            arrival_date: '',
-            departure_date: '',
-            guests_number: '',
-            is_booking: false,
-            comment: '',
-            status: 0,
-            roomId: 0,
-        })
+        // setBooking({
+        //     name: '',
+        //     phone: '',
+        //     arrival_date: '',
+        //     departure_date: '',
+        //     guests_number: '',
+        //     is_booking: false,
+        //     comment: '',
+        //     status: 0,
+        //     roomId: 0,
+        // })
     }
+
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+
+        } else {
+            addNewBooking(event);
+        }
+        setValidated(true);
+    };
 
     return (
         <Container>
@@ -48,34 +60,42 @@ const BookingForm = ({roomList}) => {
                     </h4>
                 </Card.Header>
                 <Card.Body className={"p-2"}>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Row>
                             <Col lg={6}>
-                                <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
+                                <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1"   >
                                     <Form.Control
+                                        required
                                         value={booking.name}
                                         onChange={e => setBooking({...booking, name: e.target.value})}
                                         type="text"
-                                        placeholder="Имя"
+                                        placeholder="Введите имя"
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        Введите имя
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
                                     <Form.Control
+                                        required
                                         value={booking.phone}
                                         onChange={e => setBooking({...booking, phone: e.target.value})}
                                         type="text"
-                                        placeholder="Телефон"
+                                        placeholder="Введите телефон"
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        Введите телефон в формате +79XXXXXXXXX
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row>
-
                             <Col lg={3} xs={6}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
                                     <DatePicker
+                                        required
                                         className={"form-control"}
                                         placeholderText="Дата заезда"
                                         dateFormat="dd.MM.yyyy"
@@ -88,6 +108,7 @@ const BookingForm = ({roomList}) => {
                             <Col lg={3} xs={6}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
                                     <DatePicker
+                                        required
                                         className={"form-control"}
                                         placeholderText="Дата отъезда"
                                         dateFormat="dd.MM.yyyy"
@@ -100,24 +121,33 @@ const BookingForm = ({roomList}) => {
                             <Col lg={3}>
                                 <Form.Group className="form-group mt-2" controlId="exampleForm.ControlInput1">
                                     <Form.Control
+                                        required
                                         value={booking.guests_number}
                                         onChange={e => setBooking({...booking, guests_number: e.target.value})}
                                         type="text"
                                         placeholder="Количество гостей"
                                     />
+                                    <Form.Control.Feedback type="invalid">
+                                        Введите кол-во гостей
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col lg={3}>
                                 <Form.Select
+                                    required
                                     value={booking.status}
                                     onChange={e => setBooking({...booking, status: e.target.value})}
                                     className="form-group mt-2"
-                                    aria-label="Default select example">
-                                    <option value={0} disabled={true}>Статус бронирования</option>
+                                    aria-label="Default select example"
+                                >
+                                    <option value={""}>Статус бронирования</option>
                                     <option value={1}>Не оплачено</option>
                                     <option value={2}>Депозит внесен</option>
                                     <option value={3}>Оплачено</option>
                                 </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                                    Выберите статус бронирования
+                                </Form.Control.Feedback>
                             </Col>
                         </Row>
                         <Row>
@@ -127,7 +157,7 @@ const BookingForm = ({roomList}) => {
                                                   value={booking.comment}
                                                   onChange={e => setBooking({...booking, comment: e.target.value})}
                                                   type="text"
-                                                  placeholder="Комментарий к заказу"
+                                                  placeholder="Введите комментарий к заказу"
                                                   className="form-control"
                                                   rows="2"
                                     />
@@ -135,13 +165,12 @@ const BookingForm = ({roomList}) => {
                             </Col>
                             <Col lg={3}>
                                 <Form.Select
+                                    required
                                     value={booking.roomId}
                                     onChange={e => setBooking({...booking, roomId: e.target.value})}
                                     className="form-group mt-2"
                                     aria-label="Default select example">
-                                    <option
-                                        value={0}
-                                        disabled={true}>
+                                    <option value={""}>
                                         Номер для заселения
                                     </option>
                                     {roomList !== null
@@ -171,7 +200,7 @@ const BookingForm = ({roomList}) => {
                                     type={"submit"}
                                     style={{backgroundColor: '#06266F'}}
                                     className="btn mt-2"
-                                    onClick={addNewBooking}
+                                    // onClick={addNewBooking}
                                 >
                                     Забронировать
                                 </Button>

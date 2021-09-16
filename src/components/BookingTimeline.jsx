@@ -23,13 +23,13 @@ const BookingTimeline = ({groups, items}) => {
     };
 
     return (
-        <Container className={"mt-5"}>
+        <Container className={"mt-5 mb-5"}>
             {items.length > 0
                 ? <Timeline
                     groups={groups}
                     items={items}
                     defaultTimeStart={moment()}
-                    defaultTimeEnd={moment().add(1, 'month')}
+                    defaultTimeEnd={moment().add(2, 'week')}
                     onItemSelect={handleItemClick}
                 >
                     <TimelineHeaders style={{background: '#06266f'}}>

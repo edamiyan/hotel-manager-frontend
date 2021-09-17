@@ -12,6 +12,7 @@ const Main = () => {
     const [roomList, setRoomList] = useState([]);
     const [groups, setGroups] = useState([]);
     const [items, setItems] = useState([]);
+    const [doFetch, setDoFetch] = useState(false);
 
     async function fetchRooms() {
         const response = await api.getRooms();
@@ -101,12 +102,14 @@ const Main = () => {
 
     useEffect(() => {
         fetchBookings();
-    }, [groups])
+    }, [groups, doFetch])
 
     return (
         <div className={"mt-4"}>
             <BookingForm
                 roomList={roomList}
+                doFetch={doFetch}
+                setDoFetch={setDoFetch}
             />
             <TodayArrival
                 items={items}

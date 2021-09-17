@@ -84,7 +84,7 @@ const BookingFormEdit = (props) => {
                 <Col lg={6}>
                     <Form.Select
                         value={booking.status}
-                        onChange={e => setBooking({...booking, status: e.target.value})}
+                        onChange={e => setBooking({...booking, status: parseInt(e.target.value)})}
                         className="form-group mt-2"
                         aria-label="Default select example">
                         <option value={0} disabled={true}>Статус бронирования</option>

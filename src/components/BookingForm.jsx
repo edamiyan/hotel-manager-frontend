@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { setDefaultLocale } from  "react-datepicker";
 setDefaultLocale('ru')
 
-const BookingForm = ({roomList}) => {
+const BookingForm = ({roomList, doFetch, setDoFetch}) => {
     const [validated, setValidated] = useState(false);
     const [booking, setBooking] = useState(
         {
@@ -22,21 +22,11 @@ const BookingForm = ({roomList}) => {
             roomId: 0,
         })
 
-    const addNewBooking = (e) => {
+    const addNewBooking = () => {
         console.log(booking)
-        const response = api.postBooking(booking)
+        const response = api.postBooking(booking);
+        setDoFetch(!doFetch);
         console.log(response)
-        // setBooking({
-        //     name: '',
-        //     phone: '',
-        //     arrival_date: '',
-        //     departure_date: '',
-        //     guests_number: '',
-        //     is_booking: false,
-        //     comment: '',
-        //     status: 0,
-        //     roomId: 0,
-        // })
     }
 
     const handleSubmit = (event) => {
@@ -46,7 +36,8 @@ const BookingForm = ({roomList}) => {
             event.stopPropagation();
 
         } else {
-            addNewBooking(event);
+            event.preventDefault();
+            addNewBooking();
         }
         setValidated(true);
     };
@@ -200,7 +191,6 @@ const BookingForm = ({roomList}) => {
                                     type={"submit"}
                                     style={{backgroundColor: '#06266F'}}
                                     className="btn mt-2"
-                                    // onClick={addNewBooking}
                                 >
                                     Забронировать
                                 </Button>

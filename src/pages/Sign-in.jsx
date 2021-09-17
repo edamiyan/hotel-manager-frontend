@@ -30,7 +30,7 @@ const SignIn = () => {
                     localStorage.setItem('auth', 'true');
                     localStorage.setItem('token', response.data.token);
                     setIsAuth(true);
-                    history.push('/home')
+                    history.push('/home');
                 }
             })
         }

@@ -17,8 +17,8 @@ const BookingTimeline = ({groups, items}) => {
         return response.data.room_id
     }
 
-    const handleItemClick = (itemId, _, time) => {
-        const roomId = getRoomId(itemId)
+   const handleItemClick = async (itemId, _, time) => {
+        const roomId = await getRoomId(itemId)
         history.push(`/rooms/${roomId}/booking/${itemId}`);
     };
 

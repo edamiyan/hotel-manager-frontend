@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {AuthContext} from "../context";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import {privateRoutes, publicRoutes} from "../router/routes";
 
 const AppRouter = () => {
@@ -18,6 +18,7 @@ const AppRouter = () => {
                         key={route.path}
                     />
                 )}
+                <Redirect to="/home" />
             </Switch>
             :
             <Switch>
@@ -29,6 +30,7 @@ const AppRouter = () => {
                         key={route.path}
                     />
                 )}
+                <Redirect to="/sign-in" />
             </Switch>
     );
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
 export const url = '165.227.154.88:8080'
 
 // function logout() {
@@ -10,6 +10,7 @@ export const url = '165.227.154.88:8080'
 // }
 
 async function getRooms() {
+    const token = localStorage.getItem('token');
     const response = await axios.get(
         `http://${url}/api/rooms/`,
         {
@@ -23,6 +24,7 @@ async function getRooms() {
 }
 
 async function postRoom(room) {
+    const token = localStorage.getItem('token');
     const response = await axios.post(
         `http://${url}/api/rooms/`,
         {
@@ -43,6 +45,7 @@ async function postRoom(room) {
 }
 
 async function deleteRoom(id) {
+    const token = localStorage.getItem('token');
     const response = await axios.delete(
         `http://${url}/api/rooms/${id}`,
         {
@@ -56,6 +59,7 @@ async function deleteRoom(id) {
 }
 
 async function editRoom(id, fields) {
+    const token = localStorage.getItem('token');
     const response = await axios.put(
         `http://${url}/api/rooms/${id}`,
         {
@@ -76,6 +80,7 @@ async function editRoom(id, fields) {
 }
 
 async function getRoomByID(id) {
+    const token = localStorage.getItem('token');
     const room = await axios.get(
         `http://${url}/api/rooms/${id}`,
         {
@@ -89,6 +94,7 @@ async function getRoomByID(id) {
 }
 
 async function getBookings(roomId) {
+    const token = localStorage.getItem('token');
     const bookings = await axios.get(
         `http://${url}/api/rooms/${roomId}/bookings/`,
         {
@@ -102,6 +108,7 @@ async function getBookings(roomId) {
 }
 
 async function getBookingByID(roomId, bookingId) {
+    const token = localStorage.getItem('token');
     const bookings = await axios.get(
         `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
@@ -115,6 +122,7 @@ async function getBookingByID(roomId, bookingId) {
 }
 
 async function postBooking(booking) {
+    const token = localStorage.getItem('token');
     const response = await axios.post(
         `http://${url}/api/rooms/${booking.roomId}/bookings/`,
         {
@@ -138,6 +146,7 @@ async function postBooking(booking) {
 }
 
 async function getBookingsRoomId(roomId) {
+    const token = localStorage.getItem('token');
     const bookings = await axios.get(
         `http://${url}/api/rooms/${roomId}/bookings/`,
         {
@@ -156,6 +165,7 @@ async function getBookingsRoomId(roomId) {
 }
 
 async function editBooking(roomId, bookingId, input) {
+    const token = localStorage.getItem('token');
     const response = await axios.put(
         `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
@@ -179,6 +189,7 @@ async function editBooking(roomId, bookingId, input) {
 }
 
 async function deleteBooking(roomId, bookingId) {
+    const token = localStorage.getItem('token');
     const response = await axios.delete(
         `http://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
@@ -192,6 +203,7 @@ async function deleteBooking(roomId, bookingId) {
 }
 
 async function getRoomIdByBookingId(bookingId) {
+    const token = localStorage.getItem('token');
     const response = await axios.get(
         `http://${url}/api/booking/${bookingId}`,
         {

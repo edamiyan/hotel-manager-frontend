@@ -78,8 +78,8 @@ const Main = () => {
                 canMove: false,
                 canResize: false,
                 canChangeGroup: false,
-                start_time: moment(item.arrival_date),
-                end_time: moment(item.departure_date),
+                start_time: moment(item.arrival_date).add(10, "hours"),
+                end_time: moment(item.departure_date).add(9, "hours"),
                 itemProps: {
                     'data-custom-attribute': 'Random content',
                     'aria-hidden': true,

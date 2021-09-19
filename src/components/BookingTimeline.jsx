@@ -10,7 +10,6 @@ import DateHeader from "react-calendar-timeline/lib/lib/headers/DateHeader";
 
 const BookingTimeline = ({groups, items}) => {
     const history = useHistory()
-
     async function getRoomId(bookingId) {
         const response = await api.getRoomIdByBookingId(bookingId)
         // Add response check status

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 const RoomForm = ({create}) => {
     const [room, setRoom] = useState({
+        id: '',
         room_number: '',
         double_bed: '',
         single_bed: '',

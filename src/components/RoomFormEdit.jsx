@@ -65,7 +65,7 @@ const RoomFormEdit = (props) => {
                     className="form-control" rows="4"></textarea>
             </div>
 
-            <button type={"submit"} className="btn btn-primary mt-2" onClick={editRoom}>Сохранить изменения</button>
+            <button type={"submit"} style={{backgroundColor: '#06276F', color: 'white'}} className="btn mt-2" onClick={editRoom}>Сохранить изменения</button>
         </form>
     );
 };

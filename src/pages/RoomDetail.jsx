@@ -26,14 +26,12 @@ const RoomDetail = () => {
 
     async function edit(fields) {
         const response = await api.editRoom(room_id.id, fields);
-        console.log(response);
-        await fetchRoom();
+        if (response.status === 200) {await fetchRoom();}
     }
 
     async function deleteRoom() {
         const response = await api.deleteRoom(room_id.id);
-        console.log(response);
-        history.push("/rooms");
+        if (response.status === 200) {history.push("/rooms");}
     }
 
     return (

@@ -124,7 +124,7 @@ const BookingFormEdit = (props) => {
                     <Button
                         type={"submit"}
                         className="btn mt-2"
-                        style={{backgroundColor: '#06266F'}}
+                        style={{backgroundColor: '#06276F', color: 'white'}}
                         onClick={editBooking}>Сохранить изменения
                     </Button>
                 </Col>

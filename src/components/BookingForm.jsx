@@ -22,15 +22,29 @@ const BookingForm = ({roomList, doFetch, setDoFetch}) => {
             roomId: 0,
         })
 
-    const addNewBooking = () => {
-        console.log(booking)
-        const response = api.postBooking(booking);
-        setDoFetch(!doFetch);
-        console.log(response)
+    const addNewBooking = async () => {
+        const response = await api.postBooking(booking);
+        if (response.status === 200) {
+            setDoFetch(!doFetch);
+            setValidated(false);
+            setBooking(
+                {
+                    name: '',
+                    phone: '',
+                    arrival_date: '',
+                    departure_date: '',
+                    guests_number: '',
+                    is_booking: false,
+                    comment: '',
+                    status: 0,
+                    roomId: 0,
+                });
+        }
     }
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
+        setValidated(true);
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -39,7 +53,6 @@ const BookingForm = ({roomList, doFetch, setDoFetch}) => {
             event.preventDefault();
             addNewBooking();
         }
-        setValidated(true);
     };
 
     return (
@@ -189,7 +202,7 @@ const BookingForm = ({roomList, doFetch, setDoFetch}) => {
                             <Col>
                                 <Button
                                     type={"submit"}
-                                    style={{backgroundColor: '#06266F'}}
+                                    style={{backgroundColor: '#06276F', color: 'white'}}
                                     className="btn mt-2"
                                 >
                                     Забронировать

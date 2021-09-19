@@ -19,17 +19,21 @@ const Main = () => {
         if (response.data) {
             setRoomList(response.data);
             setGroups(response.data.map(item => {
-                return {id: item.id, title: `Номер комнаты: ${item.room_number}`}
+                return {id: item.id, title: `${item.room_number}`}
             }))
         }
     }
 
     function getBgColor(is_booking, status) {
         switch (is_booking) {
+            default:
+                /* falls through */
             case true:
                 return '#06276F'
             case false:
                 switch (status) {
+                    default:
+                        /* falls through */
                     case 0:
                         return 'white'
                     case 1:
@@ -44,10 +48,14 @@ const Main = () => {
 
     function getTextColor(is_booking, status) {
         switch (is_booking) {
+            default:
+                /* falls through */
             case true:
                 return 'white'
             case false:
                 switch (status) {
+                    default:
+                        /* falls through */
                     case 0:
                         return 'black'
                     case 1:

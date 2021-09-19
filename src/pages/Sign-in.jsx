@@ -70,7 +70,7 @@ const SignIn = () => {
                         Введите корректный пароль.
                     </Form.Control.Feedback>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button style={{backgroundColor: '#06276F', color: 'white'}} className="btn mt-2" type="submit">
                     Войти
                 </Button>
             </Form>

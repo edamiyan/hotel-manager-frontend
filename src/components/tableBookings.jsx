@@ -4,6 +4,8 @@ import api from "../api";
 import {useHistory} from "react-router-dom";
 import moment from "moment";
 import 'moment/locale/ru'
+
+
 const TableBookings = ({roomId}) => {
     moment.locale('ru')
     const history = useHistory();
@@ -42,7 +44,11 @@ const TableBookings = ({roomId}) => {
                         return '#FFA900'
                     case 3:
                         return '#2E8F00'
+                    default:
+                        return 'rose'
                 }
+            default:
+                return 'rose'
         }
     }
 

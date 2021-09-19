@@ -22,15 +22,18 @@ const Rooms = () => {
 
     async function createRoom(newPost) {
         const response = await api.postRoom(newPost);
-        console.log(response);
-        await fetchRooms();
+        if (response.status === 200) {
+            newPost.id = response.data.id;
+            setRoomList([...roomList, newPost])
+        }
         handleClose();
     }
 
     async function deleteRoom(id) {
         const response = await api.deleteRoom(id);
-        console.log(response);
-        await fetchRooms();
+        if (response.status === 200) {
+            await fetchRooms();
+        }
     }
 
     return (

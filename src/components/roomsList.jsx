@@ -1,6 +1,5 @@
 import React from 'react';
-import RoomCard from "./roomCard";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {Table} from "react-bootstrap";
 
 const RoomsList = ({rooms}) => {

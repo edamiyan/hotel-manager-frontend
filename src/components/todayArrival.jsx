@@ -8,7 +8,7 @@ const TodayArrival = ({items}) => {
     let todayDepartureCount = 0;
 
     if (items) {
-        items.map(item => {
+        items.forEach(item => {
             if (item.start_time.format('DD.MM.YYYY') === today.format('DD.MM.YYYY')) {
                 todayArrivalCount++;
             }

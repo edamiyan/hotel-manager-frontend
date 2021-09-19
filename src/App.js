@@ -7,14 +7,17 @@ import MyNavbar from "./components/UI/navbar/myNavbar";
 
 
 function App() {
-    const [isAuth, setIsAuth] = useState(false)
+    const [isAuth, setIsAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (localStorage.getItem('auth')) {
             setIsAuth(true);
         }
+        setIsLoading(false);
     }, [])
 
+    if (isLoading) { return null }
     return (
         <AuthContext.Provider value={{
             isAuth,

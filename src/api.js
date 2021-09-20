@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 
 // const token = localStorage.getItem('token');
-export const url = 'amiyan.ru:2000'
+export const url = 'https://amiyan.ru:2000'
 
 // function logout() {
 //     console.log('LogOut');
@@ -12,7 +12,7 @@ export const url = 'amiyan.ru:2000'
 async function getRooms() {
     const token = localStorage.getItem('token');
     const response = await axios.get(
-        `https://${url}/api/rooms/`,
+        `${url}/api/rooms/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ async function getRooms() {
 async function postRoom(room) {
     const token = localStorage.getItem('token');
     const response = await axios.post(
-        `https://${url}/api/rooms/`,
+	`${url}/api/rooms/`,
         {
             room_number: parseInt(room.room_number),
             double_bed: parseInt(room.double_bed),
@@ -47,7 +47,7 @@ async function postRoom(room) {
 async function deleteRoom(id) {
     const token = localStorage.getItem('token');
     const response = await axios.delete(
-        `https://${url}/api/rooms/${id}`,
+        `${url}/api/rooms/${id}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ async function deleteRoom(id) {
 async function editRoom(id, fields) {
     const token = localStorage.getItem('token');
     const response = await axios.put(
-        `https://${url}/api/rooms/${id}`,
+        `${url}/api/rooms/${id}`,
         {
             room_number: parseInt(fields.room_number),
             double_bed: parseInt(fields.double_bed),
@@ -82,7 +82,7 @@ async function editRoom(id, fields) {
 async function getRoomByID(id) {
     const token = localStorage.getItem('token');
     const room = await axios.get(
-        `https://${url}/api/rooms/${id}`,
+        `${url}/api/rooms/${id}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ async function getRoomByID(id) {
 async function getBookings(roomId) {
     const token = localStorage.getItem('token');
     const bookings = await axios.get(
-        `https://${url}/api/rooms/${roomId}/bookings/`,
+        `${url}/api/rooms/${roomId}/bookings/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -107,10 +107,24 @@ async function getBookings(roomId) {
     return bookings.data
 }
 
+async function getAllBookings() {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(
+        `${url}/api/booking/`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    )
+    return response.data
+}
+
 async function getBookingByID(roomId, bookingId) {
     const token = localStorage.getItem('token');
     const bookings = await axios.get(
-        `https://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
+        `${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -124,7 +138,7 @@ async function getBookingByID(roomId, bookingId) {
 async function postBooking(booking) {
     const token = localStorage.getItem('token');
     const response = await axios.post(
-        `https://${url}/api/rooms/${booking.roomId}/bookings/`,
+	`${url}/api/rooms/${booking.roomId}/bookings/`,
         {
             name: booking.name,
             phone: booking.phone,
@@ -148,7 +162,7 @@ async function postBooking(booking) {
 async function getBookingsRoomId(roomId) {
     const token = localStorage.getItem('token');
     const bookings = await axios.get(
-        `https://${url}/api/rooms/${roomId}/bookings/`,
+	`${url}/api/rooms/${roomId}/bookings/`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -167,7 +181,7 @@ async function getBookingsRoomId(roomId) {
 async function editBooking(roomId, bookingId, input) {
     const token = localStorage.getItem('token');
     const response = await axios.put(
-        `https://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
+        `${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             name: input.name,
             phone: input.phone,
@@ -191,7 +205,7 @@ async function editBooking(roomId, bookingId, input) {
 async function deleteBooking(roomId, bookingId) {
     const token = localStorage.getItem('token');
     const response = await axios.delete(
-        `https://${url}/api/rooms/${roomId}/bookings/${bookingId}`,
+	`${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -205,7 +219,7 @@ async function deleteBooking(roomId, bookingId) {
 async function getRoomIdByBookingId(bookingId) {
     const token = localStorage.getItem('token');
     const response = await axios.get(
-        `https://${url}/api/booking/${bookingId}`,
+        `${url}/api/booking/${bookingId}`,
         {
             headers: {
                 'Content-Type': 'application/json',
@@ -218,7 +232,7 @@ async function getRoomIdByBookingId(bookingId) {
 
 const api = {
     getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getBookingByID, postBooking, deleteBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
+    getBookings, getAllBookings, getBookingByID, postBooking, deleteBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
 }
 
 export default api;

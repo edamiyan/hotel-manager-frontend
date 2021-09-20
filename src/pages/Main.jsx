@@ -69,25 +69,20 @@ const Main = () => {
     }
 
     async function fetchBookings() {
-        let promises = []
-        groups.forEach(group => {
-            promises.push(api.getBookingsRoomId(group.id))
-        })
-        const result = await Promise.all(promises);
-        const resArr = result.map(item => item.data).filter(item => !!item).flat();
-        const resArrFiltered = resArr.filter((item) => {
-            return moment().diff(item.departure_date, 'month') <= 1;
+        const resp = await api.getAllBookings();
+        const resArrFiltered = resp.data.filter((item) => {
+            return moment().diff(item.end_time, 'month') <= 1;
         })
         setItems(resArrFiltered.map(item => {
             return {
                 id: item.id,
-                group: item.roomId,
-                title: item.name,
+                group: item.group,
+                title: item.title,
                 canMove: false,
                 canResize: false,
                 canChangeGroup: false,
-                start_time: moment(item.arrival_date).add(10, "hours"),
-                end_time: moment(item.departure_date).add(9, "hours"),
+                start_time: moment(item.start_time).add(10, "hours"),
+                end_time: moment(item.end_time).add(9, "hours"),
                 itemProps: {
                     'data-custom-attribute': 'Random content',
                     'aria-hidden': true,
@@ -110,7 +105,7 @@ const Main = () => {
 
     useEffect(() => {
         fetchBookings();
-    }, [groups, doFetch])
+    }, [doFetch])
 
     return (
         <div className={"mt-4"}>

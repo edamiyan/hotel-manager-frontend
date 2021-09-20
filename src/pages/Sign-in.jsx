@@ -20,7 +20,7 @@ const SignIn = () => {
         } else {
             event.preventDefault();
             axios.post(
-                `http://${url}/auth/sign-in`,
+                `https://${url}/auth/sign-in`,
                 {
                     username: user.username,
                     password: user.password,

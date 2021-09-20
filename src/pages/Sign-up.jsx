@@ -13,7 +13,7 @@ const SignUp = () => {
 
     async function login(event) {
         axios.post(
-            `http://${url}/auth/sign-in`,
+            `https://${url}/auth/sign-in`,
             {
                 username: user.username,
                 password: user.password,

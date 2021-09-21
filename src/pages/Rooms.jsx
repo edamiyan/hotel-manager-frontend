@@ -24,7 +24,12 @@ const Rooms = () => {
         const response = await api.postRoom(newPost);
         if (response.status === 200) {
             newPost.id = response.data.id;
-            setRoomList([...roomList, newPost])
+            if (!!roomList) {
+                setRoomList([...roomList, newPost])
+            }
+            else {
+                setRoomList([newPost])
+            }
         }
         handleClose();
     }

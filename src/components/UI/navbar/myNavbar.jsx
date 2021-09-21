@@ -14,7 +14,16 @@ const MyNavbar = () => {
     return (
         <Navbar style={{backgroundColor: '#06266F'}} variant="dark">
             <Container>
-                <Navbar.Brand>Hotel</Navbar.Brand>
+                <Navbar.Brand>
+                    <img
+                        style={{color: "white"}}
+                        src="logo.svg"
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        alt="Hotel Logo"
+                    />
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     {(localStorage.getItem('auth'))
                         ?

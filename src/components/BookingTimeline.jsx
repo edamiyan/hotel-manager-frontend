@@ -7,6 +7,7 @@ import api from "../api";
 import {useHistory} from "react-router-dom";
 import TimelineHeaders from "react-calendar-timeline/lib/lib/headers/TimelineHeaders";
 import DateHeader from "react-calendar-timeline/lib/lib/headers/DateHeader";
+import SidebarHeader from "react-calendar-timeline/lib/lib/headers/SidebarHeader";
 
 const BookingTimeline = ({groups, items}) => {
     const history = useHistory()
@@ -30,9 +31,19 @@ const BookingTimeline = ({groups, items}) => {
                     defaultTimeStart={moment()}
                     defaultTimeEnd={moment().add(2, 'week')}
                     onItemSelect={handleItemClick}
+                    sidebarWidth={40}
+                    style={{  fontWeight: "500"}}
+
                 >
                     <TimelineHeaders style={{background: '#06266f'}}>
-                        <DateHeader unit="primaryHeader" />
+                        <SidebarHeader
+
+                        >
+                            {({ getRootProps }) => {
+                                return <div {...getRootProps()} style={{ color: "white", textAlign: "center", width: "40px"}}>№</div>
+                            }}
+                        </SidebarHeader>
+                        <DateHeader unit="primaryHeader"/>
                         <DateHeader />
                     </TimelineHeaders>
                 </Timeline>

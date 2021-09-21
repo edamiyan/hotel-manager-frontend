@@ -13,7 +13,6 @@ const BookingTimeline = ({groups, items}) => {
     const history = useHistory()
     async function getRoomId(bookingId) {
         const response = await api.getRoomIdByBookingId(bookingId)
-        // Add response check status
         return response.data.room_id
     }
 
@@ -29,7 +28,7 @@ const BookingTimeline = ({groups, items}) => {
                     groups={groups}
                     items={items}
                     defaultTimeStart={moment()}
-                    defaultTimeEnd={moment().add(2, 'week')}
+                    defaultTimeEnd={moment().add(1.8, 'week')}
                     onItemSelect={handleItemClick}
                     sidebarWidth={40}
                     style={{  fontWeight: "500"}}

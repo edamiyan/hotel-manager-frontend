@@ -5,7 +5,7 @@ import {Table} from "react-bootstrap";
 const RoomsList = ({rooms}) => {
     const history = useHistory();
     return (
-        rooms !== null
+        rooms
         ? rooms.length === 0
             ?
                 <h2 style={{textAlign: 'center'}}>Список комнат пуст</h2>

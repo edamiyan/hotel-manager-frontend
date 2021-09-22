@@ -1,13 +1,13 @@
 import axios from "axios";
 import moment from "moment";
 
-// const token = localStorage.getItem('token');
 export const url = 'http://192.168.31.242:8080'
 
-// function logout() {
-//     console.log('LogOut');
-//     // localStorage.clear();
-// }
+function logout(err) {
+    console.log(err);
+    localStorage.clear();
+    window.location.reload();
+}
 
 async function getRooms() {
     const token = localStorage.getItem('token');
@@ -19,7 +19,13 @@ async function getRooms() {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
     return response.data
 }
 
@@ -40,7 +46,14 @@ async function postRoom(room) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 
@@ -54,7 +67,14 @@ async function deleteRoom(id) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 
@@ -75,13 +95,20 @@ async function editRoom(id, fields) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 
 async function getRoomByID(id) {
     const token = localStorage.getItem('token');
-    const room = await axios.get(
+    const response = await axios.get(
         `${url}/api/rooms/${id}`,
         {
             headers: {
@@ -89,13 +116,20 @@ async function getRoomByID(id) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
-    return room.data
+    if (!response) {
+        return []
+    }
+
+    return response.data
 }
 
 async function getBookings(roomId) {
     const token = localStorage.getItem('token');
-    const bookings = await axios.get(
+    const response = await axios.get(
         `${url}/api/rooms/${roomId}/bookings/`,
         {
             headers: {
@@ -103,8 +137,15 @@ async function getBookings(roomId) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
-    return bookings.data
+    if (!response) {
+        return []
+    }
+
+    return response.data
 }
 
 async function getAllBookings() {
@@ -117,13 +158,20 @@ async function getAllBookings() {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response.data
 }
 
 async function getBookingByID(roomId, bookingId) {
     const token = localStorage.getItem('token');
-    const bookings = await axios.get(
+    const response = await axios.get(
         `${url}/api/rooms/${roomId}/bookings/${bookingId}`,
         {
             headers: {
@@ -131,8 +179,15 @@ async function getBookingByID(roomId, bookingId) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
-    return bookings.data
+    if (!response) {
+        return []
+    }
+
+    return response.data
 }
 
 async function postBooking(booking) {
@@ -155,7 +210,13 @@ async function postBooking(booking) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
     return response
 }
 
@@ -169,7 +230,13 @@ async function getBookingsRoomId(roomId) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!bookings) {
+        return []
+    }
     if (bookings.data.data) {
         bookings.data.data.forEach(booking => {
             booking.roomId = roomId;
@@ -198,7 +265,14 @@ async function editBooking(roomId, bookingId, input) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 
@@ -212,7 +286,14 @@ async function deleteBooking(roomId, bookingId) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 
@@ -226,7 +307,14 @@ async function getRoomIdByBookingId(bookingId) {
                 'Authorization': `Bearer ${token}`
             }
         }
+    ).catch(err => {
+            logout(err)
+        }
     )
+    if (!response) {
+        return []
+    }
+
     return response
 }
 

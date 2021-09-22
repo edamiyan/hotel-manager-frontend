@@ -53,13 +53,13 @@ const BookingDetail = () => {
                         default:
                             /* falls through */
                         case 1:
-                            setStatus({text: 'Не оплачено', bgColor: '#FF5A40', color: 'white'});
+                            setStatus({text: 'Не оплачено', bgColor: '#a91500', color: 'white'});
                             break;
                         case 2:
-                            setStatus({text: 'Депозит внесен', bgColor: '#FFA900', color: 'white'});
+                            setStatus({text: 'Депозит внесен', bgColor: '#d28a03', color: 'white'});
                             break;
                         case 3:
-                            setStatus({text: 'Оплачено', bgColor: '#2E8F00', color: 'white'});
+                            setStatus({text: 'Оплачено', bgColor: '#267500', color: 'white'});
                             break;
                     }
             }
@@ -87,16 +87,17 @@ const BookingDetail = () => {
             {booking
                 ? <Container>
                     <Card
-                        style={{
-                            background: status.bgColor,
-                        }}
-                        text={'white'}
                         className="mt-xl-5 mt-md-4 mt-3 row"
                     >
-                        <Card.Header style={{color: status.color}}>
+                        <Card.Header
+                            style={{
+                                background: status.bgColor,
+                                color: status.color,
+                            }}
+                        >
                             <h3>Информация по бронированию</h3>
                         </Card.Header>
-                        <Card.Body style={{color: status.color}}>
+                        <Card.Body>
                             <Row className={'mb-3'}>
                                 <Col lg={3} md={4} sm={5} xs={6}><Card.Title>Имя клиента:</Card.Title></Col>
                                 <Col lg={9} md={8} sm={7} xs={6}><Card.Title>{booking.name}</Card.Title></Col>
@@ -126,7 +127,7 @@ const BookingDetail = () => {
                                     <Card.Subtitle className={'mb-2'}>Статус бронирования:</Card.Subtitle>
                                 </Col>
                                 <Col lg={9} md={8} sm={7} xs={6}>
-                                    <Card.Subtitle className={'mb-2'}>{status.text}</Card.Subtitle>
+                                    <Card.Subtitle className={'mb-2'} style={{color: status.bgColor}}>{status.text}</Card.Subtitle>
                                 </Col>
                             </Row>
                             <hr/>
@@ -142,7 +143,7 @@ const BookingDetail = () => {
                             }
 
                         </Card.Body>
-                        <Card.Footer style={{color: status.color}}><h6>Телефон для связи: <a style={{color: 'white'}}
+                        <Card.Footer ><h6>Телефон для связи: <a style={{color: '#004180', textDecoration: 'none'}}
                                                                                    href={'tel:' + booking.phone}>{booking.phone}</a>
                         </h6>
                             <Row className={'mt-4'}>

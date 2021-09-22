@@ -27,7 +27,7 @@ const RoomForm = ({create}) => {
             <div className="form-group mt-2">
                 <input className="form-control"
                        value={room.room_number}
-                       onChange={e => setRoom({...room, room_number: e.target.value})}
+                       onChange={e => setRoom({...room, room_number: parseInt(e.target.value)})}
                        type="text"
                        placeholder="Номер комнаты"
                 />
@@ -35,7 +35,7 @@ const RoomForm = ({create}) => {
             <div className="form-group mt-2">
                 <input className="form-control"
                        value={room.double_bed}
-                       onChange={e => setRoom({...room, double_bed: e.target.value})}
+                       onChange={e => setRoom({...room, double_bed: parseInt(e.target.value)})}
                        type="text"
                        placeholder="Количество двуспальных мест"
                 />
@@ -43,7 +43,7 @@ const RoomForm = ({create}) => {
             <div className="form-group mt-2">
                 <input className="form-control"
                        value={room.single_bed}
-                       onChange={e => setRoom({...room, single_bed: e.target.value})}
+                       onChange={e => setRoom({...room, single_bed: parseInt(e.target.value)})}
                        type="text"
                        placeholder="Количество односпальных мест"
                 />
@@ -51,7 +51,7 @@ const RoomForm = ({create}) => {
             <div className="form-group mt-2">
                 <input className="form-control"
                     value={room.price}
-                    onChange={e => setRoom({...room, price: e.target.value})}
+                    onChange={e => setRoom({...room, price: parseInt(e.target.value)})}
                     type="text"
                     placeholder="Стоимость проживания (сутки)"
                 />

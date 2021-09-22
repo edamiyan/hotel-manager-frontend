@@ -9,6 +9,7 @@ const SignUp = () => {
     const {setIsAuth} = useContext(AuthContext);
     const [user, setUser] = useState({name: '', username: '', password: ''});
     const [validated, setValidated] = useState(false);
+    const [invalidData, setInvalidData] = useState(false);
     const history = useHistory();
 
     async function login(event) {
@@ -39,9 +40,11 @@ const SignUp = () => {
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
+            setValidated(true);
+
         } else {
+            setValidated(false);
             event.preventDefault();
             axios.post(
                 `${url}/auth/sign-up`,
@@ -54,9 +57,10 @@ const SignUp = () => {
                 if (response.status === 200) {
                     login(event)
                 }
+            }).catch(err => {
+                setInvalidData(true);
             })
         }
-        setValidated(true);
     };
 
 
@@ -84,12 +88,13 @@ const SignUp = () => {
                     <Form.Label>Имя пользователя</Form.Label>
                     <Form.Control
                         required
+                        isInvalid={invalidData}
                         value={user.username}
                         onChange={e => setUser({...user, username: e.target.value})}
                         type="login"
                         placeholder="Введите имя пользователя"/>
                     <Form.Control.Feedback type="invalid">
-                        Введите корректный логин.
+                        Пользователь с таким именем уже существует.
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="validationPassword">

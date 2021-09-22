@@ -10,14 +10,17 @@ const SignIn = () => {
     const {setIsAuth} = useContext(AuthContext);
     const [user, setUser] = useState({username: '', password: ''});
     const [validated, setValidated] = useState(false);
+    const [invalidData, setInvalidData] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setInvalidData(false);
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
+            setValidated(true);
         } else {
+            setValidated(false);
             event.preventDefault();
             axios.post(
                 `${url}/auth/sign-in`,
@@ -32,9 +35,10 @@ const SignIn = () => {
                     setIsAuth(true);
                     history.push('/home');
                 }
+            }).catch(err => {
+                setInvalidData(true);
             })
         }
-        setValidated(true);
     };
 
     return (
@@ -60,6 +64,7 @@ const SignIn = () => {
                 <Form.Group className="mb-3" controlId="validationPassword">
                     <Form.Label>Пароль</Form.Label>
                     <Form.Control
+                        isInvalid={invalidData}
                         required
                         value={user.password}
                         onChange={e => setUser({...user, password: e.target.value})}

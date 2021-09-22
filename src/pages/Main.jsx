@@ -70,34 +70,36 @@ const Main = () => {
     }
 
     async function fetchBookings() {
-        const resp = await api.getAllBookings();
-        const resArrFiltered = resp.data.filter((item) => {
-            return moment().diff(item.end_time, 'month') <= 1;
-        })
-        setItems(resArrFiltered.map(item => {
-            return {
-                id: item.id,
-                group: item.group,
-                title: item.title,
-                canMove: false,
-                canResize: false,
-                canChangeGroup: false,
-                start_time: moment(item.start_time).add(10, "hours"),
-                end_time: moment(item.end_time).add(9, "hours"),
-                itemProps: {
-                    'data-custom-attribute': 'Random content',
-                    'aria-hidden': true,
-                    style: {
-                        background: getBgColor(item.is_booking, item.status),
-                        border: '1px solid black',
-                        borderRadius: '3px',
-                        color: getTextColor(item.is_booking, item.status),
-                        fontSize: 16,
-                        fontWeight: 450,
+        const resp = await api.getAllBookings()
+        if (!!resp.data) {
+            const resArrFiltered = resp.data.filter((item) => {
+                return moment().diff(item.end_time, 'month') <= 1;
+            })
+            setItems(resArrFiltered.map(item => {
+                return {
+                    id: item.id,
+                    group: item.group,
+                    title: item.title,
+                    canMove: false,
+                    canResize: false,
+                    canChangeGroup: false,
+                    start_time: moment(item.start_time).add(10, "hours"),
+                    end_time: moment(item.end_time).add(9, "hours"),
+                    itemProps: {
+                        'data-custom-attribute': 'Random content',
+                        'aria-hidden': true,
+                        style: {
+                            background: getBgColor(item.is_booking, item.status),
+                            border: '1px solid black',
+                            borderRadius: '3px',
+                            color: getTextColor(item.is_booking, item.status),
+                            fontSize: 16,
+                            fontWeight: 450,
+                        }
                     }
                 }
-            }
-        }))
+            }))
+        }
     }
     async function fetchAll() {
         setIsLoading(true);

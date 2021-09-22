@@ -13,6 +13,7 @@ const Main = () => {
     const [groups, setGroups] = useState([]);
     const [items, setItems] = useState([]);
     const [doFetch, setDoFetch] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     async function fetchRooms() {
         const response = await api.getRooms();
@@ -22,7 +23,7 @@ const Main = () => {
                 return {id: item.id, title: `${item.room_number}`}
             }))
         }
-    }
+     }
 
     function getBgColor(is_booking, status) {
         switch (is_booking) {
@@ -98,14 +99,18 @@ const Main = () => {
             }
         }))
     }
-
+    async function fetchAll() {
+        setIsLoading(true);
+        if (!groups.length) {
+            await fetchRooms();
+        }
+        await fetchBookings();
+        setIsLoading(false);
+    }
     useEffect(() => {
-        fetchRooms();
-    }, [])
-
-    useEffect(() => {
-        fetchBookings();
+        fetchAll();
     }, [doFetch])
+
 
     return (
         <div className={"mt-4"}>
@@ -117,32 +122,40 @@ const Main = () => {
             <TodayArrival
                 items={items}
             />
-            <BookingTimeline
-                groups={groups}
-                items={items}
-            />
-            {groups.length < 1
-                ? <Container>
-                    <h2 className={'p-2'}
-                        style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
-                        <Link
-                            style={{color: 'white', textDecoration: 'none'}}
-                            to={'/rooms'}>Создайте свой первый номер</Link>
-                    </h2>
-                </Container>
-                : <div></div>
+            {
+                !isLoading
+                ?
+                    <React.Fragment>
+                        <BookingTimeline
+                            groups={groups}
+                            items={items}
+                        />
+                        {groups.length < 1
+                            ? <Container>
+                                <h2 className={'p-2'}
+                                    style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
+                                    <Link
+                                        style={{color: 'white', textDecoration: 'none'}}
+                                        to={'/rooms'}>Создайте свой первый номер</Link>
+                                </h2>
+                            </Container>
+                            : <div></div>
+                        }
+                        {items.length < 1
+                            ? <Container>
+                                <h2 className={'p-2'}
+                                    style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
+                                    <Link
+                                        style={{color: 'white', textDecoration: 'none'}}
+                                        to={'/home'}>Создайте первое бронирование</Link>
+                                </h2>
+                            </Container>
+                            : <div></div>
+                        }
+                    </React.Fragment>
+                    :<div></div>
             }
-            {items.length < 1
-                ? <Container>
-                    <h2 className={'p-2'}
-                        style={{border: '2px solid #06266f', borderRadius: '5px', backgroundColor: '#06266f'}}>
-                        <Link
-                            style={{color: 'white', textDecoration: 'none'}}
-                            to={'/home'}>Создайте первое бронирование</Link>
-                    </h2>
-                </Container>
-                : <div></div>
-            }
+
 
         </div>
     );

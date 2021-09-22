@@ -17,13 +17,14 @@ const BookingTimeline = ({groups, items}) => {
     }
 
    const handleItemClick = async (itemId, _, time) => {
-        const roomId = await getRoomId(itemId)
+        const roomId = items.filter(item => item.id === itemId).group
+        // const roomId = await getRoomId(itemId)
         history.push(`/rooms/${roomId}/booking/${itemId}`);
     };
 
     return (
         <Container className={"mt-5 mb-5"}>
-            {items.length > 0
+            {items.length > 0 && groups.length > 0
                 ? <Timeline
                     groups={groups}
                     items={items}

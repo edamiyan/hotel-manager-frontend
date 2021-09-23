@@ -1,7 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-
-export const url = 'https://amiyan.ru:2000'
+import {url} from "../src/.env/confings";
 
 function logout(err) {
     console.log(err);
@@ -297,30 +296,9 @@ async function deleteBooking(roomId, bookingId) {
     return response
 }
 
-async function getRoomIdByBookingId(bookingId) {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(
-        `${url}/api/booking/${bookingId}`,
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }
-    ).catch(err => {
-            logout(err)
-        }
-    )
-    if (!response) {
-        return []
-    }
-
-    return response
-}
-
 const api = {
     getRooms, postRoom, deleteRoom, getRoomByID, editRoom,
-    getBookings, getAllBookings, getBookingByID, postBooking, deleteBooking, getBookingsRoomId, editBooking, getRoomIdByBookingId
+    getBookings, getAllBookings, getBookingByID, postBooking, deleteBooking, getBookingsRoomId, editBooking
 }
 
 export default api;

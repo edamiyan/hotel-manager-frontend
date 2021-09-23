@@ -8,16 +8,20 @@ import TableBookings from "../components/tableBookings";
 
 const RoomDetail = () => {
     const [show, setShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const history = useHistory();
 
+    const history = useHistory();
     const room_id = useParams()
+
     const [room, setRoom] = useState({room_number: '', double_bed: '', single_bed: '', description: ''});
 
     async function fetchRoom() {
         const response = await api.getRoomByID(room_id.id);
         setRoom(response);
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -26,7 +30,9 @@ const RoomDetail = () => {
 
     async function edit(fields) {
         const response = await api.editRoom(room_id.id, fields);
-        if (response.status === 200) {await fetchRoom();}
+        if (response.status === 200) {
+            setRoom(fields);
+        }
     }
 
     async function deleteRoom() {
@@ -43,37 +49,47 @@ const RoomDetail = () => {
                     handleClose = {handleClose}
                 />
             </MyModal>
-            <Card className={"mt-5 row"}>
-                <Card.Body>
-                    <Card.Title>Номер комнаты: {room.room_number}</Card.Title>
-                    <Card.Subtitle className="mb-2"> Количество двуспальных мест: {room.double_bed}</Card.Subtitle>
-                    <Card.Subtitle>Количество односпальных мест: {room.single_bed}</Card.Subtitle>
-                    {room.description === ''
-                        ?<div></div>
-                        :<Card.Text>Описание: {room.description}</Card.Text>
-                    }
-                    <Card.Title>Цена за сутки: {room.price} рублей</Card.Title>
-                    <div className="row d-flex justify-content-center">
-                        <Button
-                            variant="secondary"
-                            className={"m-1 col-lg-5 col-md-12"}
-                            onClick={handleShow}
-                        >
-                            Редактировать
-                        </Button>
-                        <Button
-                            onClick={deleteRoom}
-                            variant="danger"
-                            className={"m-1 col-lg-5 col-md-12"}
-                        >
-                            Удалить
-                        </Button>
-                    </div>
-                </Card.Body>
-            </Card>
-            <TableBookings
-                roomId={room_id}
-            />
+            {!isLoading
+                ?
+                <React.Fragment>
+                    <Card className={"mt-5 row"}>
+                        <Card.Body>
+                            <div>
+                                <Card.Title>Номер комнаты: {room.room_number}</Card.Title>
+                                <Card.Subtitle className="mb-2"> Количество двуспальных
+                                    мест: {room.double_bed}</Card.Subtitle>
+                                <Card.Subtitle>Количество односпальных мест: {room.single_bed}</Card.Subtitle>
+                                {room.description === ''
+                                    ? <div></div>
+                                    : <Card.Text>Описание: {room.description}</Card.Text>
+                                }
+                                <Card.Title>Цена за сутки: {room.price} рублей</Card.Title>
+                            </div>
+                            <div className="row d-flex justify-content-center">
+                                <Button
+                                    variant="secondary"
+                                    className={"m-1 col-lg-5 col-md-12"}
+                                    onClick={handleShow}
+                                >
+                                    Редактировать
+                                </Button>
+                                <Button
+                                    onClick={deleteRoom}
+                                    variant="danger"
+                                    className={"m-1 col-lg-5 col-md-12"}
+                                >
+                                    Удалить
+                                </Button>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                    <TableBookings
+                        roomId={room_id}
+                        roomNumber={room.room_number}
+                    />
+                </React.Fragment>
+                : <div></div>
+            }
         </Container>
     );
 };

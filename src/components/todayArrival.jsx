@@ -22,13 +22,22 @@ const TodayArrival = ({items}) => {
     return (
         <Container className={'mt-4'} style={{color: "#021d5f"}}>
             {todayArrivalCount
-                ?<h1>Сегодня необходимо заселить: {todayArrivalCount}</h1>
+                ?<React.Fragment>
+                    <hr/>
+                    <h1>Сегодня необходимо заселить: {todayArrivalCount}</h1>
+                    <hr/>
+                </React.Fragment>
                 :<div></div>
             }
             {todayDepartureCount
-                ?<h1>Сегодня необходимо освободить: {todayDepartureCount}</h1>
+                ?<React.Fragment>
+                    <hr/>
+                    <h1>Сегодня необходимо освободить: {todayDepartureCount}</h1>
+                    <hr/>
+                </React.Fragment>
                 :<div></div>
             }
+
         </Container>
     );
 };

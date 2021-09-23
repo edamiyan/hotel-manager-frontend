@@ -10,10 +10,12 @@ const Rooms = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [roomList, setRoomList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     async function fetchRooms() {
         const response = await api.getRooms();
         setRoomList(response.data)
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -51,10 +53,15 @@ const Rooms = () => {
             <MyModal title={'Создать номер'} show={show} handleClose={handleClose}>
                 <RoomForm create={createRoom}/>
             </MyModal>
-            <RoomsList
-                rooms={roomList}
-                deleteRoom={deleteRoom}
-            />
+            {!isLoading
+                ?
+                <RoomsList
+                    rooms={roomList}
+                    deleteRoom={deleteRoom}
+                />
+                :<div></div>
+            }
+
         </Container>
     );
 };

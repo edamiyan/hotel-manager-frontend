@@ -1,7 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-
-export const url = 'http://192.168.31.242:8080'
+import {url} from "../src/.env/confings";
 
 function logout(err) {
     console.log(err);

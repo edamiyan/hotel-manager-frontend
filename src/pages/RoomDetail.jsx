@@ -5,16 +5,21 @@ import {Button, Card, Container} from "react-bootstrap";
 import MyModal from "../components/UI/modal/MyModal";
 import RoomFormEdit from "../components/RoomFormEdit";
 import TableBookings from "../components/tableBookings";
+import RoomDeleteMessage from "../components/RoomDeleteMessage";
 
 const RoomDetail = () => {
     const [show, setShow] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const deleteRoomHandleClose = () => setShowDelete(false);
+    const deleteRoomHandleShow = () => setShowDelete(true);
+
     const history = useHistory();
-    const room_id = useParams()
+    const room_id = useParams();
 
     const [room, setRoom] = useState({room_number: '', double_bed: '', single_bed: '', description: ''});
 
@@ -49,6 +54,13 @@ const RoomDetail = () => {
                     handleClose = {handleClose}
                 />
             </MyModal>
+            <MyModal title={'Вы хотите удалить номер?'} show={showDelete} handleClose={deleteRoomHandleClose}>
+                <RoomDeleteMessage
+                    roomId = {room.id}
+                    deleteRoom = {deleteRoom}
+                    deleteRoomHandleClose = {deleteRoomHandleClose}
+                />
+            </MyModal>
             {!isLoading
                 ?
                 <React.Fragment>
@@ -74,7 +86,7 @@ const RoomDetail = () => {
                                     Редактировать
                                 </Button>
                                 <Button
-                                    onClick={deleteRoom}
+                                    onClick={deleteRoomHandleShow}
                                     variant="danger"
                                     className={"m-1 col-lg-5 col-md-12"}
                                 >

@@ -11,7 +11,7 @@ import SidebarHeader from "react-calendar-timeline/lib/lib/headers/SidebarHeader
 const BookingTimeline = ({groups, items}) => {
     const history = useHistory()
     const handleItemClick = async (itemId, _, time) => {
-        const roomId = items.filter(item => item.id === itemId).group
+        const roomId = items.filter(item => item.id === itemId)[0].group;
         history.push(`/rooms/${roomId}/booking/${itemId}`);
     };
 

@@ -5,16 +5,21 @@ import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import MyModal from "../components/UI/modal/MyModal";
 import BookingFormEdit from "../components/BookingFormEdit";
 import moment from "moment";
-
-
+import BookingDeleteMessage from "../components/BookingDeleteMessage";
 
 const BookingDetail = () => {
     const [status, setStatus] = useState({text: '', bgColor: 'white', color: ''});
     const {roomId, bookingId} = useParams();
     const [booking, setBooking] = useState();
     const [show, setShow] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const deleteBookingHandleClose = () => setShowDelete(false);
+    const deleteBookingHandleShow = () => setShowDelete(true);
+
     const history = useHistory();
 
     async function fetchBooking() {
@@ -44,14 +49,14 @@ const BookingDetail = () => {
             booking.departure_date = new Date(moment(booking.departure_date).hours(12));
             switch (booking.is_booking) {
                 default:
-                    /* falls through */
+                /* falls through */
                 case true:
                     setStatus({text: 'Заказ с Booking', bgColor: '#06276F', color: 'white'});
                     break;
                 case false:
                     switch (booking.status) {
                         default:
-                            /* falls through */
+                        /* falls through */
                         case 1:
                             setStatus({text: 'Не оплачено', bgColor: '#a91500', color: 'white'});
                             break;
@@ -84,6 +89,12 @@ const BookingDetail = () => {
                     handleClose={handleClose}
                 />
             </MyModal>
+            <MyModal title={'Вы хотите удалить номер?'} show={showDelete} handleClose={deleteBookingHandleClose}>
+                <BookingDeleteMessage
+                    deleteBooking={deleteBooking}
+                    deleteBookingHandleClose={deleteBookingHandleClose}
+                />
+            </MyModal>
             {booking
                 ? <Container>
                     <Card
@@ -104,13 +115,16 @@ const BookingDetail = () => {
                             </Row>
                             <hr/>
                             <Row className={'mb-3'}>
-                                <Col lg={3} md={4} sm={5} xs={6}><Card.Subtitle className={'mb-2'}>Дата прибытия:</Card.Subtitle></Col>
-                                <Col lg={9} md={8} sm={7} xs={6}><Card.Subtitle>{moment(booking.arrival_date)?.format("dd, DD MMMM YYYY, HH:mm")}</Card.Subtitle></Col>
+                                <Col lg={3} md={4} sm={5} xs={6}><Card.Subtitle className={'mb-2'}>Дата
+                                    прибытия:</Card.Subtitle></Col>
+                                <Col lg={9} md={8} sm={7}
+                                     xs={6}><Card.Subtitle>{moment(booking.arrival_date)?.format("dd, DD MMMM YYYY, HH:mm")}</Card.Subtitle></Col>
                             </Row>
                             <hr/>
                             <Row className={'mb-3'}>
                                 <Col lg={3} md={4} sm={5} xs={6}><Card.Subtitle>Дата отъезда:</Card.Subtitle></Col>
-                                <Col lg={9} md={8} sm={7} xs={6}><Card.Subtitle>{moment(booking.departure_date)?.format("dd, DD MMMM YYYY, HH:mm")}</Card.Subtitle></Col>
+                                <Col lg={9} md={8} sm={7}
+                                     xs={6}><Card.Subtitle>{moment(booking.departure_date)?.format("dd, DD MMMM YYYY, HH:mm")}</Card.Subtitle></Col>
                             </Row>
                             <hr/>
                             <Row className={'mb-3'}>
@@ -127,7 +141,8 @@ const BookingDetail = () => {
                                     <Card.Subtitle className={'mb-2'}>Статус бронирования:</Card.Subtitle>
                                 </Col>
                                 <Col lg={9} md={8} sm={7} xs={6}>
-                                    <Card.Subtitle className={'mb-2'} style={{color: status.bgColor}}>{status.text}</Card.Subtitle>
+                                    <Card.Subtitle className={'mb-2'}
+                                                   style={{color: status.bgColor}}>{status.text}</Card.Subtitle>
                                 </Col>
                             </Row>
                             <hr/>
@@ -143,8 +158,8 @@ const BookingDetail = () => {
                             }
 
                         </Card.Body>
-                        <Card.Footer ><h6>Телефон для связи: <a style={{color: '#004180', textDecoration: 'none'}}
-                                                                                   href={'tel:' + booking.phone}>{booking.phone}</a>
+                        <Card.Footer><h6>Телефон для связи: <a style={{color: '#004180', textDecoration: 'none'}}
+                                                               href={'tel:' + booking.phone}>{booking.phone}</a>
                         </h6>
                             <Row className={'mt-4'}>
                                 <Button
@@ -157,7 +172,7 @@ const BookingDetail = () => {
                                 <Button
                                     className={'col-6'}
                                     variant="danger"
-                                    onClick={deleteBooking}
+                                    onClick={deleteBookingHandleShow}
                                 >
                                     Удалить
                                 </Button>

@@ -6,18 +6,19 @@ import moment from "moment";
 import 'moment/locale/ru'
 
 
-const TableBookings = ({roomId}) => {
+const TableBookings = ({roomId, roomNumber}) => {
     moment.locale('ru')
     const history = useHistory();
     const [bookings, setBookings] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     async function fetchBookings() {
         const response = await api.getBookings(roomId.id);
         if (response.data) {
-            response.data.sort(function(a, b) {
+            response.data.sort(function (a, b) {
                 var c = new Date(a.arrival_date);
                 var d = new Date(b.arrival_date);
-                return c-d;
+                return c - d;
             });
             const today = moment();
             const responseFiltered = response.data.filter((item) => {
@@ -25,6 +26,7 @@ const TableBookings = ({roomId}) => {
             })
             setBookings(responseFiltered);
         }
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -56,38 +58,39 @@ const TableBookings = ({roomId}) => {
         bookings.forEach(booking => {
                 booking.arrival_date = new Date(booking.arrival_date);
                 booking.departure_date = new Date(booking.departure_date);
-                booking.statusColor = getStatusColor(booking.is_booking ,booking.status);
+                booking.statusColor = getStatusColor(booking.is_booking, booking.status);
             }
         )
     }
 
-
     return (
         <div className={"row mt-4"}>
-            {bookings != null
+            {!isLoading
                 ?
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Дата заезда</th>
-                        <th>Дата отъезда</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {bookings.map(booking =>
-                        <tr style={{color: 'white', backgroundColor: booking.statusColor}} onClick={() => {
-                            history.push(`/rooms/${roomId.id}/booking/${booking.id}`)
-                        }} key={booking.id}>
-                            <td>{booking.name}</td>
-                            <td>{moment(booking.arrival_date).format("DD MMMM yyyy")}</td>
-                            <td>{moment(booking.departure_date).format("DD MMMM yyyy")}</td>
+                bookings.length
+                    ?
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Дата заезда</th>
+                            <th>Дата отъезда</th>
                         </tr>
-                    )}
-                    </tbody>
-                </Table>
-                :
-                <div>Бронирования не найдены</div>
+                        </thead>
+                        <tbody>
+                        {bookings.map(booking =>
+                            <tr style={{color: 'white', backgroundColor: booking.statusColor}} onClick={() => {
+                                history.push(`/rooms/${roomId.id}/booking/${booking.id}`)
+                            }} key={booking.id}>
+                                <td>{booking.name}</td>
+                                <td>{moment(booking.arrival_date).format("DD MMMM yyyy")}</td>
+                                <td>{moment(booking.departure_date).format("DD MMMM yyyy")}</td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                    :<h3>Отсутствуют предстоящие бронирования для комнаты №:{roomNumber}</h3>
+                : <div></div>
             }
         </div>
     );

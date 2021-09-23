@@ -85,6 +85,7 @@ const RoomDetail = () => {
                     </Card>
                     <TableBookings
                         roomId={room_id}
+                        roomNumber={room.room_number}
                     />
                 </React.Fragment>
                 : <div></div>

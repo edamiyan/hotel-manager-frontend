@@ -14,7 +14,9 @@ const Rooms = () => {
 
     async function fetchRooms() {
         const response = await api.getRooms();
-        setRoomList(response.data)
+        if (response.data.length) {
+            setRoomList(response.data.sort((a, b) => parseInt(a.room_number) > parseInt(b.room_number) ? 1 : -1))
+        }
         setIsLoading(false);
     }
 

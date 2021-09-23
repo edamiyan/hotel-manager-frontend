@@ -19,7 +19,7 @@ const Main = () => {
         const response = await api.getRooms();
         if (response.data) {
             setRoomList(response.data);
-            setGroups(response.data.map(item => {
+            setGroups(response.data.sort((a, b) => parseInt(a.room_number) > parseInt(b.room_number) ? 1 : -1).map(item => {
                 return {id: item.id, title: `${item.room_number}`}
             }))
         }

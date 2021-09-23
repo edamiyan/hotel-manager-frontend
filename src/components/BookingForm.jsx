@@ -86,7 +86,7 @@ const BookingForm = ({roomList, doFetch, setDoFetch}) => {
                                         required
                                         value={booking.phone}
                                         onChange={e => setBooking({...booking, phone: e.target.value})}
-                                        type="text"
+                                        type="tel"
                                         placeholder="Введите телефон"
                                     />
                                     <Form.Control.Feedback type="invalid">
@@ -128,7 +128,7 @@ const BookingForm = ({roomList, doFetch, setDoFetch}) => {
                                         required
                                         value={booking.guests_number}
                                         onChange={e => setBooking({...booking, guests_number: e.target.value})}
-                                        type="text"
+                                        type="number"
                                         placeholder="Количество гостей"
                                     />
                                     <Form.Control.Feedback type="invalid">

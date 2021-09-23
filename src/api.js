@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 
-export const url = 'http://192.168.31.242:8080'
+export const url = 'https://amiyan.ru:2000'
 
 function logout(err) {
     console.log(err);

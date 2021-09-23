@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import {url} from "../src/.env/confings";
+import {url} from "./.env/configs";
 
 function logout(err) {
     console.log(err);

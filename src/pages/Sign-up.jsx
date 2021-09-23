@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../context";
 import axios from "axios";
-import {url} from "../../src/.env/confings";
+import {url} from "../.env/configs";
 import {Button, Container, Form} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 

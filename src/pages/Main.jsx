@@ -121,13 +121,13 @@ const Main = () => {
                 doFetch={doFetch}
                 setDoFetch={setDoFetch}
             />
-            <TodayArrival
-                items={items}
-            />
             {
                 !isLoading
                 ?
                     <React.Fragment>
+                        <TodayArrival
+                            items={items}
+                        />
                         <BookingTimeline
                             groups={groups}
                             items={items}
